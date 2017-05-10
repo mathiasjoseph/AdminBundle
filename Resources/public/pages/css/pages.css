@@ -498,7 +498,7 @@ body.rtl [class^="col-"], body.rtl [class*="col-"] {
 
 .page-sidebar .sidebar-menu .menu-items > li ul.sub-menu > li {
     background: none;
-    padding: 0px 20px 0 40px;
+    padding: 0px 20px 0 30px;
     margin-top: 1px;
 }
 
