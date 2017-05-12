@@ -30,6 +30,7 @@
       "Miky\\Bundle\\AdminBundle" : ""
     }
   },
+  "minimum-stability": "dev",
   "target-dir" : "Miky/Bundle/AdminBundle",
   "repositories" : [{
   }],
