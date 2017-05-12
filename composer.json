@@ -1,7 +1,6 @@
 {
   "name" : "mikycorp/adminbundle",
   "description" : "A Admin bundle",
-  "version": "0.1.0",
   "type" : "symfony-bundle",
   "authors" : [{
     "name" : "Mathias Joseph",
