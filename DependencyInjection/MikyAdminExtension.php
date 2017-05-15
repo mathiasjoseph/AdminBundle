@@ -5,6 +5,7 @@ namespace Miky\Bundle\AdminBundle\DependencyInjection;
 use Miky\Bundle\CoreBundle\DependencyInjection\AbstractCoreExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -13,7 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class MikyAdminExtension extends AbstractCoreExtension
+class MikyAdminExtension extends AbstractCoreExtension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -28,8 +29,15 @@ class MikyAdminExtension extends AbstractCoreExtension
 
         $this->remapParametersNamespaces($config, $container, array(
             '' => array(
-                'admin_key_path' => 'miky_admin.admin_key_path',
+                'admin_key_path' => 'miky_admin.admin_path',
             ),
         ));
+
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/app'));
+        $loader->load('config.yml');
     }
 }
