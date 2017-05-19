@@ -419,7 +419,7 @@ body.rtl [class^="col-"], body.rtl [class*="col-"] {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 65%;
+    width: 90%;
 }
 
 .page-sidebar .sidebar-menu .menu-items > li > a > .details {
