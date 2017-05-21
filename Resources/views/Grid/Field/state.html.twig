@@ -1,7 +1,7 @@
-{% set value = 'adevis.ui.' ~ data %}
+{% set value = 'miky.ui.' ~ data %}
 
 {% if options.vars.labels is defined %}
-    {% include [(options.vars.labels ~ ':' ~ data ~ '.html.twig'), '@AdevisAdmin/Label/_default.html.twig'] with {'value': value} %}
+    {% include [(options.vars.labels ~ ':' ~ data ~ '.html.twig'), '@MikyAdmin/Label/_default.html.twig'] with {'value': value} %}
 {% else %}
-    {% include '@AdevisAdmin/Label/_default.html.twig' with {'value': value} %}
+    {% include '@MikyAdmin/Label/_default.html.twig' with {'value': value} %}
 {% endif %}

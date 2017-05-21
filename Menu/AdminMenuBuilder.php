@@ -70,8 +70,8 @@ final class AdminMenuBuilder extends AbstractMenuBuilder
 //        ;
 //        foreach ($schemas as $key => $value){
 //            $settingsMenu
-//                ->addChild("settings_".$key, ['route' => 'adevis_admin_settings_edit', 'routeParameters' => array('schema' => $key)])
-//                ->setLabel("adevis.ui.".$key)
+//                ->addChild("settings_".$key, ['route' => 'miky_admin_settings_edit', 'routeParameters' => array('schema' => $key)])
+//                ->setLabel("miky.ui.".$key)
 //                ->setLabelAttribute('icon', 'calendar-check-o')
 //            ;
 //        }

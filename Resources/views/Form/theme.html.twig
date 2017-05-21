@@ -79,7 +79,7 @@ col-md-9 form-group{% endif %}">
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
         {%- for error in errors -%}
-            <div class="ui red pointing label adevis-validation-error">
+            <div class="ui red pointing label miky-validation-error">
                 {{ error.message }}
             </div>
         {%- endfor -%}
@@ -170,7 +170,7 @@ col-md-9 form-group{% endif %}">
 {%- endblock percent_widget %}
 
 {% block collection_widget -%}
-    {% from 'AdevisResourceBundle:Macros:notification.html.twig' import error %}
+    {% from 'MikyResourceBundle:Macros:notification.html.twig' import error %}
     {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
 
     {% spaceless %}
@@ -219,7 +219,7 @@ col-md-9 form-group{% endif %}">
     {% endspaceless %}
 {% endmacro %}
 
-{% block adevis_province_widget %}
+{% block miky_province_widget %}
     <div class="ui compact segment">
         <div class="inline fields">
             {{ form_row(form.code) }}
@@ -229,7 +229,7 @@ col-md-9 form-group{% endif %}">
     </div>
 {% endblock %}
 
-{% block adevis_zone_member_widget %}
+{% block miky_zone_member_widget %}
     <div class="ui compact segment">
         <div class="inline fields">
             {{ form_row(form.code) }}
@@ -237,20 +237,20 @@ col-md-9 form-group{% endif %}">
     </div>
 {% endblock %}
 
-{% block adevis_promotion_rule_widget %}
+{% block miky_promotion_rule_widget %}
     <div class="ui segment">
         {{ form_widget(form) }}
     </div>
 {% endblock %}
 
-{% block adevis_promotion_action_widget %}
+{% block miky_promotion_action_widget %}
     <div class="ui segment">
         {{ form_widget(form) }}
     </div>
 {% endblock %}
 
 
-{#{% block adevis_media_type_widget %}#}
+{#{% block miky_media_type_widget %}#}
     {#{{ dump(form) }}#}
     {#<div class="form-group last">#}
 
@@ -282,9 +282,9 @@ col-md-9 form-group{% endif %}">
         {#</div>#}
     {#</div>#}
 
-{#{% endblock adevis_media_type_widget %}#}
+{#{% endblock miky_media_type_widget %}#}
 
-{% block adevis_media_type_widget %}
+{% block miky_media_type_widget %}
 
         <div class="row">
             <div class="col-md-4 pull-left">
@@ -313,4 +313,4 @@ col-md-9 form-group{% endif %}">
             </div>
         </div>
 
-{% endblock adevis_media_type_widget %}
+{% endblock miky_media_type_widget %}

@@ -1,0 +1,7 @@
+{% macro default(header, icon, subheader) %}
+    <h3 class="page-title"> {{ header }}
+        {% if subheader is not empty %}
+            <small>{{ subheader }}</small>
+        {% endif %}
+    </h3>
+{% endmacro %}

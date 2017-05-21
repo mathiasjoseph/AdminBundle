@@ -1,6 +1,6 @@
-{% extends 'AdevisAdminBundle::layout.html.twig' %}
+{% extends 'MikyAdminBundle::layout.html.twig' %}
 
-{% import 'AdevisAdminBundle:Macro:headers.html.twig' as headers %}
+{% import 'MikyAdminBundle:Macro:headers.html.twig' as headers %}
 
 
 {% set definition = resources.definition %}
@@ -10,7 +10,7 @@
 
 {% block title %}{{ parent() }} {{ header|trans }}{% endblock %}
 {% block breadcrumb_elements %}
-{% include configuration.vars.templates.breadcrumb|default('AdevisAdminBundle:Crud/Breadcrumb:_index.html.twig') %}
+{% include configuration.vars.templates.breadcrumb|default('MikyAdminBundle:Crud/Breadcrumb:_index.html.twig') %}
 {% endblock %}
 {% block content %}
 
@@ -27,13 +27,13 @@
 
                 {% if definition.actionGroups.main is defined and definition.getActions('main')|length > 0 %}
                     {% for action in definition.getActions('main') %}
-                        {{ adevis_grid_render_action(resources, action, null) }}
+                        {{ miky_grid_render_action(resources, action, null) }}
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
 
 
-{{ adevis_grid_render(resources, 'AdevisAdminBundle:Crud:_grid.html.twig') }}
+{{ miky_grid_render(resources, 'MikyAdminBundle:Crud:_grid.html.twig') }}
     </div>
 {% endblock %}

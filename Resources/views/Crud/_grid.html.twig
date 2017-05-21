@@ -1,7 +1,7 @@
-{% import 'AdevisAdminBundle:Macro:pagination.html.twig' as pagination %}
-{% import 'AdevisAdminBundle:Macro:buttons.html.twig' as buttons %}
-{% import 'AdevisAdminBundle:Macro:messages.html.twig' as messages %}
-{% import 'AdevisAdminBundle:Macro:table.html.twig' as table %}
+{% import 'MikyAdminBundle:Macro:pagination.html.twig' as pagination %}
+{% import 'MikyAdminBundle:Macro:buttons.html.twig' as buttons %}
+{% import 'MikyAdminBundle:Macro:messages.html.twig' as messages %}
+{% import 'MikyAdminBundle:Macro:table.html.twig' as table %}
 
 {% set definition = grid.definition %}
 {% set data = grid.data %}
@@ -40,7 +40,7 @@
                 {% for field in definition.fields|keys %}
 
                     {% if field in definition.filters|keys %}
-                        <td>{{ adevis_grid_render_filter(grid, attribute(definition.filters, field)) }}</td>
+                        <td>{{ miky_grid_render_filter(grid, attribute(definition.filters, field)) }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
@@ -65,7 +65,7 @@
         </table></div>
 </div>
 {% else %}
-    {{ messages.info('adevis.ui.no_results_to_display'|trans) }}
+    {{ messages.info('miky_core.no_results_to_display'|trans) }}
 {% endif %}
 {{ pagination.render(data) }}
 </div>

@@ -1,0 +1,100 @@
+{% macro default(url, message, id, icon, class) %}
+    <a class="btn btn-xs {% if class is not empty %} {{ class }} {% endif %}" {% if id is not empty %} id="{{ id }}"{% endif %} href="{{ url }}">
+
+            {% if icon is not empty %}<i class="icon-{{ icon }}"></i>{% endif %}  {{ message|trans }}
+
+    </a>
+{% endmacro %}
+
+{% macro show(url, message, id, class) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'miky.ui.show'|trans %}
+    {% endif %}
+
+    {{ buttons.default(url, message, id, 'search') }}
+{% endmacro %}
+
+{% macro preview(id, class, message, icon) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'miky.ui.preview'|trans %}
+    {% endif %}
+
+    <a class="btn btn-xs ressourcePreviewModal{% if class is not empty %} {{ class }} {% endif %}" {% if id is not empty %} data-id="{{ id }}" id="{{ id }}"{% endif %} >
+        {% if icon is not empty %}<i class="icon-{{ icon }}"></i>{% endif %} Preview
+    </a>
+{% endmacro %}
+
+{% macro create(url, message, id) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'miky_core.create'|trans %}
+    {% endif %}
+
+    <a href="{{ url }}" {% if id is not empty %} id="{{ id }}"{% endif %} class="btn btn-circle btn-info">
+        <i class="fa fa-plus"></i>
+        <span class="hidden-xs">{{ message|trans }}</span>
+    </a>
+{% endmacro %}
+
+{% macro edit(url, message, id) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'miky.ui.edit'|trans %}
+    {% endif %}
+
+    {{ buttons.default(url, message, id, 'pencil', 'blue') }}
+{% endmacro %}
+
+{% macro duplicate(url, message, id) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'miky.ui.duplicate'|trans %}
+    {% endif %}
+
+    {{ buttons.default(url, message, id, 'pencil', 'blue') }}
+{% endmacro %}
+
+{% macro generator(url, message, id) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'Générer'|trans %}
+    {% endif %}
+
+    {{ buttons.default(url, message, id, 'pencil', 'blue') }}
+{% endmacro %}
+{% macro validate(url, message, id) %}
+    {% import _self as buttons %}
+
+    {% if message is empty %}
+        {% set message = 'miky.ui.validate'|trans %}
+    {% endif %}
+
+    {{ buttons.default(url, message, id, 'check', 'green') }}
+{% endmacro %}
+
+{% macro filter(message) %}
+    <button class="btn btn-sm btn-success filter-submit margin-bottom">
+        <i class="fa fa-search"></i>{{ message is empty ? 'miky.ui.filter'|trans : message }}</button>
+
+{% endmacro %}
+
+{% macro resetFilters(url, message) %}
+    <a class="btn btn-sm btn-default filter-cancel" href="{{ url }}">
+        <i class="fa fa-times"></i>{{ message is empty ? 'miky.ui.clear_filters'|trans : message }}</a>
+{% endmacro %}
+
+{% macro delete(url, message) %}
+
+
+    <a class="btn red" href="{{ url }}">
+        <i class="icon-trash"></i> {{ message is empty ? 'miky.ui.delete'|trans : message }}</a>
+
+{% endmacro %}

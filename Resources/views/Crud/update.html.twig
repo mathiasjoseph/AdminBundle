@@ -1,15 +1,15 @@
-{% extends 'AdevisAdminBundle::layout.html.twig' %}
+{% extends 'MikyAdminBundle::layout.html.twig' %}
 
-{% import 'AdevisAdminBundle:Macro:headers.html.twig' as headers %}
-{% import 'AdevisAdminBundle:Macro:buttons.html.twig' as buttons %}
+{% import 'MikyAdminBundle:Macro:headers.html.twig' as headers %}
+{% import 'MikyAdminBundle:Macro:buttons.html.twig' as buttons %}
 
 {% set header = configuration.vars.header|default(metadata.applicationName~'.'~metadata.name~'.edit') %}
 
 {% block title %}{{ parent() }} {{ header|trans }}{% endblock %}
 
-{% form_theme form 'AdevisAdminBundle:Form:theme.html.twig' %}
+{% form_theme form 'MikyAdminBundle:Form:theme.html.twig' %}
 {% block breadcrumb_elements %}
-    {% include configuration.vars.templates.breadcrumb|default('AdevisAdminBundle:Crud/Breadcrumb:_update.html.twig') %}
+    {% include configuration.vars.templates.breadcrumb|default('MikyAdminBundle:Crud/Breadcrumb:_update.html.twig') %}
 
 {% endblock %}
 {% block content %}
@@ -24,7 +24,7 @@
                     <div class="caption">
                         <i class="fa fa-shopping-cart"></i>{{ configuration.vars.subheader|default(null)|trans }}</div>
                     <div class="actions btn-set">
-                        {% include 'AdevisAdminBundle:Form:_saveChanges.html.twig' with {'cancel_path': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))} %}
+                        {% include 'MikyAdminBundle:Form:_saveChanges.html.twig' with {'cancel_path': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))} %}
 
                     </div>
                 </div>
