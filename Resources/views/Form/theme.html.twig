@@ -1,0 +1,316 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_row -%}
+
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row %}
+{%- block textarea_widget -%}
+    <div class="col-md-9 form-group">
+        <textarea style="
+    width: 100%;
+    height: 250px;
+"{{ block('widget_attributes') }}>{{ value }}</textarea></div>
+{%- endblock textarea_widget -%}
+{%- block form_widget_compound -%}
+    {% set attr = attr|merge({'class': 'col-md-12 row'}) %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
+    </div>
+{%- endblock form_widget_compound -%}
+{%- block form_label -%}
+    {% set label_attr = label_attr|merge({'class': 'col-md-3 '}) %}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}{% if required -%}
+        <span class="required" aria-required="true"> * </span>
+    {%- endif -%}</label>
+    {%- endif -%}
+{%- endblock form_label -%}
+{%- block choice_widget_collapsed -%}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+        {% set required = false %}
+    {%- endif -%}
+    {% set attr = attr|merge({'class': 'form-control col-md-'}) %}
+    <select class="full-width" data-init-plugin="select2" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('choice_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+{%- endblock choice_widget_collapsed -%}
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    <div class="{% if type != 'hidden' %}
+col-md-9 form-group{% endif %}">
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    </div>
+{%- endblock form_widget_simple -%}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <div class="ui red pointing label adevis-validation-error">
+                {{ error.message }}
+            </div>
+        {%- endfor -%}
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{% block checkbox_row -%}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+
+        {% set label_attr = label_attr|merge({'class': 'col-md-3'}) %}
+        {% if label is not same as(false) -%}
+            {% if not compound -%}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {%- endif -%}
+
+            {% if label is empty -%}
+                {%- if label_format is not empty -%}
+                    {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                    }) %}
+                {%- else -%}
+                    {% set label = name|humanize %}
+                {%- endif -%}
+            {%- endif -%}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}{% if required -%}
+            <span class="required" aria-required="true"> * </span>
+        {%- endif -%}</label>
+        {%- endif -%}
+        <div class="col-md-9 form-group">
+
+            {{- form_widget(form) -}}
+
+
+        </div>
+        {{- form_errors(form) -}}
+
+    </div>
+{%- endblock checkbox_row %}
+
+{% block radio_row -%}
+    <div class="field{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+        <div class="ui radio checkbox">
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
+{%- endblock radio_row %}
+
+{% block money_widget -%}
+    <div class="ui labeled input">
+        <div class="ui label"></div>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock money_widget %}
+
+{% block choice_row -%}
+    <div class="{% if required %}{% endif %}form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+        {{- form_label(form) -}}
+        {% set attr = attr|merge({'class': attr.class|default ~ ' ui dropdown'}) %}
+        <div class="col-md-9 form-group">
+            {{- form_widget(form, {'attr': attr}) -}}
+        </div>
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock choice_row %}
+
+{%- block choice_widget_expanded -%}
+
+
+            {%- for child in form %}
+                    <div class="checkbox col-md-3">
+
+                        {{- form_widget(child) -}}
+                        {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+                    </div>
+
+            {% endfor -%}
+{%- endblock choice_widget_expanded -%}
+
+
+{% block percent_widget -%}
+    <div class="ui right labeled input">
+        {{- form_widget(form) -}}
+        <div class="ui basic label">%</div>
+    </div>
+{%- endblock percent_widget %}
+
+{% block collection_widget -%}
+    {% from 'AdevisResourceBundle:Macros:notification.html.twig' import error %}
+    {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
+
+    {% spaceless %}
+        <div data-form-type="collection" {{ block('widget_container_attributes') }}
+                {% if prototype is defined and allow_add %}
+                    data-prototype='{{ _self.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+                {%- endif -%}
+        >
+            {{ error(form.vars.errors) }}
+
+            {% if prototypes|default is iterable %}
+                {% for key, subPrototype in prototypes %}
+                    <input type="hidden" data-form-prototype="{{ key }}"
+                           value="{{ _self.collection_item(subPrototype, allow_delete, button_delete_label, '__name__')|e }}"/>
+                {% endfor %}
+            {% endif %}
+
+            <div data-form-collection="list">
+                {% for child in form %}
+                    {{ _self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
+                {% endfor %}
+            </div>
+
+            {% if prototype is defined and allow_add %}
+                <a href="#" class="ui labeled icon button" data-form-collection="add">
+                    <i class="plus square outline icon"></i>
+                    {{ button_add_label|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{%- endblock collection_widget %}
+
+{% macro collection_item(form, allow_delete, button_delete_label, index) %}
+    {% spaceless %}
+        <div data-form-collection="item" data-form-collection-index="{{ index }}">
+            {{ form_widget(form) }}
+            {% if allow_delete %}
+                <a href="#" data-form-collection="delete" class="ui red labeled icon button"
+                   style="margin-bottom: 1em;">
+                    <i class="trash icon"></i>
+                    {{ button_delete_label|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{% block adevis_province_widget %}
+    <div class="ui compact segment">
+        <div class="inline fields">
+            {{ form_row(form.code) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.abbreviation) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block adevis_zone_member_widget %}
+    <div class="ui compact segment">
+        <div class="inline fields">
+            {{ form_row(form.code) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block adevis_promotion_rule_widget %}
+    <div class="ui segment">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block adevis_promotion_action_widget %}
+    <div class="ui segment">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+
+{#{% block adevis_media_type_widget %}#}
+    {#{{ dump(form) }}#}
+    {#<div class="form-group last">#}
+
+        {#<div class="col-md-8">#}
+            {#<div class="fileinput fileinput-new" data-provides="fileinput">#}
+                {#<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">#}
+
+                    {#{% if value is not empty and value.providerReference %}#}
+                        {#{% media value, 'admin' with {'class': 'img-polaroid media-object'} %}#}
+                    {#{% else %}#}
+                        {#<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />#}
+                    {#{% endif %}#}
+                {#</div>#}
+                {#<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>#}
+                {#<div>#}
+                                                            {#<span class="btn default btn-file">#}
+                                                                {#<span class="fileinput-new"> Selectionner une image </span>#}
+                                                                {#<span class="fileinput-exists">Changer d'image</span>#}
+                                                                {#<input type="file"#}
+                                                                {#name="{{ form.children.binaryContent.vars.full_name }}"#}
+                                                                       {#id="{{ form.children.binaryContent.vars.id }}"#}
+                                                                {#>#}
+                                                            {#</span>#}
+                    {#<span style="display: none !important;" ><input style="display: none !important;" type="checkbox" id="{{ form.children.unlink.vars.full_name }}" name="{{ form.children.unlink.vars.full_name }}" class="unlink" {% if form.children.unlink.vars.value is not empty %}value="{{ form.children.unlink.vars.value }}" {% endif %}></span>#}
+                    {#<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Retirer </a>#}
+                {#</div>#}
+            {#</div>#}
+
+        {#</div>#}
+    {#</div>#}
+
+{#{% endblock adevis_media_type_widget %}#}
+
+{% block adevis_media_type_widget %}
+
+        <div class="row">
+            <div class="col-md-4 pull-left">
+                {% if value is not empty and value.providerReference %}
+
+                        <strong>{{ value.name }}</strong>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4 pull-left">
+                {% if value is not empty and value.providerReference %}
+                    <div class="pull-left" style="margin-right: 5px">
+                        {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
+                    </div>
+                {% else %}
+                    <div class="pull-left" style="margin-right: 5px">
+                        <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-2 pull-left">
+                {{ block('form_widget') }}
+            </div>
+        </div>
+
+{% endblock adevis_media_type_widget %}

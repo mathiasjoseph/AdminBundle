@@ -1,0 +1,39 @@
+{% extends 'AdevisAdminBundle::layout.html.twig' %}
+
+{% import 'AdevisAdminBundle:Macro:headers.html.twig' as headers %}
+
+
+{% set definition = resources.definition %}
+{% set data = resources.data %}
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.'~metadata.pluralName) %}
+
+{% block title %}{{ parent() }} {{ header|trans }}{% endblock %}
+{% block breadcrumb_elements %}
+{% include configuration.vars.templates.breadcrumb|default('AdevisAdminBundle:Crud/Breadcrumb:_index.html.twig') %}
+{% endblock %}
+{% block content %}
+
+        {{ headers.default(header|trans, configuration.vars.icon|default('list'), configuration.vars.subheader|default(null)|trans) }}
+
+
+
+    <div class="portlet ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-shopping-cart"></i>{{ configuration.vars.subheader|default(null)|trans}}
+            </div>
+            <div class="actions">
+
+                {% if definition.actionGroups.main is defined and definition.getActions('main')|length > 0 %}
+                    {% for action in definition.getActions('main') %}
+                        {{ adevis_grid_render_action(resources, action, null) }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+
+{{ adevis_grid_render(resources, 'AdevisAdminBundle:Crud:_grid.html.twig') }}
+    </div>
+{% endblock %}

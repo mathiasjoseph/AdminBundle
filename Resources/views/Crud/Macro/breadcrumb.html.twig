@@ -1,0 +1,22 @@
+{% macro crumble(crumbs = {}) %}
+                    {% for crumb in crumbs %}
+                        {% if loop.last %}
+                            <li>
+                                <span>{{ crumb.label }}</span>
+                            </li>
+                        {% elseif crumb.url is defined %}
+
+                            <li>
+                                <a href="{{ crumb.url }}">{{ crumb.label }}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <span>{{ crumb.label }}</span>
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        <li>
+                            <a href="{{ path('adevis_admin_dashboard') }}">{{ 'adevis.ui.administration'|trans }}</a>
+                        </li>
+                    {% endfor %}
+{% endmacro %}

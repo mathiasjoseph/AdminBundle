@@ -1,0 +1,53 @@
+{% extends 'AdevisAdminBundle::layout.html.twig' %}
+
+{% import 'AdevisAdminBundle:Macro:headers.html.twig' as headers %}
+{% import 'AdevisAdminBundle:Macro:buttons.html.twig' as buttons %}
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.'~metadata.name~'.edit') %}
+
+{% block title %}{{ parent() }} {{ header|trans }}{% endblock %}
+
+{% form_theme form 'AdevisAdminBundle:Form:theme.html.twig' %}
+{% block breadcrumb_elements %}
+    {% include configuration.vars.templates.breadcrumb|default('AdevisAdminBundle:Crud/Breadcrumb:_update.html.twig') %}
+
+{% endblock %}
+{% block content %}
+    {{ headers.default(header|trans, configuration.vars.icon|default('pencil'), configuration.vars.subheader|default(null)|trans) }}
+
+    <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
+{{ form_start(form, {'action': path(configuration.getRouteName('update'), configuration.vars.route.parameters|default({ 'id': resource.id })), 'attr': {'class': 'form-horizontal form-row-seperated', 'novalidate': 'novalidate'}}) }}
+
+            <div class="portlet">
+                <input type="hidden" name="_method" value="PUT" />
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-shopping-cart"></i>{{ configuration.vars.subheader|default(null)|trans }}</div>
+                    <div class="actions btn-set">
+                        {% include 'AdevisAdminBundle:Form:_saveChanges.html.twig' with {'cancel_path': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))} %}
+
+                    </div>
+                </div>
+                <div class="portlet-body">
+        {% if configuration.vars.templates.form is defined %}
+            {% include configuration.vars.templates.form %}
+        {% else %}
+            {{ form_widget(form) }}
+        {% endif %}
+
+{{ form_row(form._token) }}
+            </div>
+            </div>
+        </div>
+{{ form_end(form, {'render_rest': false}) }}
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var current_object_id = {{ resource.id }};
+        var current_object_metadata_name = "{{ metadata.name }}";
+    </script>
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,3 @@
+{% import 'AdevisAdminBundle:Macro:buttons.html.twig' as buttons %}
+
+{{ buttons.duplicate(path(grid.requestConfiguration.getRouteName('duplicate'), {'id': data.id})) }}

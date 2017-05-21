@@ -1,0 +1,10 @@
+{% import 'AdevisAdminBundle:Crud/Macro:breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+        { label: 'adevis.ui.administration'|trans, url: path('adevis_admin_dashboard') },
+        { label: (metadata.applicationName~'.ui.'~metadata.pluralName)|trans, url: path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({})) },
+        { label: 'adevis.ui.new'|trans }
+    ]
+%}
+
+{{ breadcrumb.crumble(breadcrumbs) }}
