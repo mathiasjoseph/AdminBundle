@@ -2,31 +2,30 @@
 
 {% block form_row -%}
 
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+    <div class="form-group form-group-default{% if (not compound or force_error|default(false)) and not valid %} error {% endif %} {% if required -%} required{% endif %}">
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
     </div>
 {%- endblock form_row %}
 {%- block textarea_widget -%}
-    <div class="col-md-9 form-group">
+
         <textarea style="
     width: 100%;
     height: 250px;
-"{{ block('widget_attributes') }}>{{ value }}</textarea></div>
+"{{ block('widget_attributes') }}>{{ value }}</textarea>
 {%- endblock textarea_widget -%}
 {%- block form_widget_compound -%}
-    {% set attr = attr|merge({'class': 'col-md-12 row'}) %}
-    <div {{ block('widget_container_attributes') }}>
+
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
         {%- endif -%}
         {{- block('form_rows') -}}
         {{- form_rest(form) -}}
-    </div>
+
 {%- endblock form_widget_compound -%}
 {%- block form_label -%}
-    {% set label_attr = label_attr|merge({'class': 'col-md-3 '}) %}
+    {% set label_attr = label_attr|merge({'class': ''}) %}
     {% if label is not same as(false) -%}
         {% if not compound -%}
             {% set label_attr = label_attr|merge({'for': id}) %}
@@ -69,12 +68,11 @@
 {%- endblock choice_widget_collapsed -%}
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
-    <div class="{% if type != 'hidden' %}
-col-md-9 form-group{% endif %}">
+
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
 
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-    </div>
+
 {%- endblock form_widget_simple -%}
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
