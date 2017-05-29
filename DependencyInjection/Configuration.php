@@ -19,9 +19,9 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('miky_admin');
-        $rootNode
-            ->children()
-                ->scalarNode('admin_key_path')->defaultValue("admin")->cannotBeEmpty()->end();
+//        $rootNode
+//            ->children()
+//                ->scalarNode('admin_key_path')->defaultValue("admin")->cannotBeEmpty()->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

@@ -27,11 +27,6 @@ class MikyAdminExtension extends AbstractCoreExtension implements PrependExtensi
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $this->remapParametersNamespaces($config, $container, array(
-            '' => array(
-                'admin_key_path' => 'miky_admin.admin_path',
-            ),
-        ));
 
     }
 
