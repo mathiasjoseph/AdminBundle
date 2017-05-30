@@ -172,24 +172,30 @@
 
         <div class="visible-lg visible-md m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-                <span class="semi-bold">David</span> <span class="text-master">Nest</span>
+                {% if app.user.firstname is not empty and app.user.lastname is not empty %}
+                    <span class="semi-bold">{{ app.user.firstname }}</span> <span class="text-master">{{ app.user.lastname }}</span>
+                {% else %}
+                    <span class="semi-bold">{{ app.user.username }}</span>
+                {% endif %}
             </div>
             <div class="dropdown pull-right">
                 <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="thumbnail-wrapper d32 circular inline m-t-5">
-<img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">
+<img src="{{ asset('bundles/mikyadmin/assets/img/profiles/avatar.jpg') }}" alt=""
+     data-src="{{ asset('bundles/mikyadmin/assets/img/profiles/avatar.jpg') }}"
+     data-src-retina="{{ asset('bundles/mikyadmin/assets/img/profiles/avatar_small2x.jpg') }}" width="32" height="32">
 </span>
                 </button>
                 <ul class="dropdown-menu profile-dropdown" role="menu">
-                    <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
+                    <li><a href="#"><i class="pg-settings_small"></i>{{ "miky_settings.settings"|trans }}</a>
                     </li>
                     <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
                     </li>
-                    <li><a href="#"><i class="pg-signals"></i> Help</a>
+                    <li><a href="#"><i class="pg-signals"></i>{{ "miky_core.help"|trans }}</a>
                     </li>
                     <li class="bg-master-lighter">
-                        <a href="#" class="clearfix">
-                            <span class="pull-left">Logout</span>
+                        <a href="{{ path('miky_user_admin_employee_security_logout') }}" class="clearfix">
+                            <span class="pull-left">{{ "miky_user.logout"|trans }}</span>
                             <span class="pull-right"><i class="pg-power"></i></span>
                         </a>
                     </li>
