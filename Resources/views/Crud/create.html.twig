@@ -12,7 +12,7 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-       {{ headers.default(header|trans, configuration.vars.icon|default('plus'), configuration.vars.subheader|default(null)|trans) }}
+        {{ headers.default(header|trans, configuration.vars.icon|default('plus'), configuration.vars.subheader|default(null)|trans) }}
 
         {{ form_start(form, {'action': path(configuration.vars.route.name|default(configuration.getRouteName('create')), configuration.vars.route.parameters|default({})), 'attr': {'class': '', 'novalidate': 'novalidate'}}) }}
 
@@ -28,9 +28,9 @@
                 </div>
                 <div class="panel-body">
                     {% if configuration.vars.templates.form is defined %}
-                    {% include configuration.vars.templates.form %}
+                        {% include configuration.vars.templates.form %}
                     {% else %}
-                    {{ form_widget(form) }}
+                        {{ form_widget(form) }}
                     {% endif %}
                 </div>
             </div>
@@ -38,6 +38,18 @@
         </div>
         {{ form_row(form._token) }}
         {{ form_end(form, {'render_rest': false}) }}
-  </div>
+    </div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-validation/js/jquery.validate.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-validation/localization/messages_'~app.request.locale~'.min.js') }}"
+            type="text/javascript"></script>
+    <script>
+        $(function () {
+            $('form').validate()
+        })
+    </script>
+{% endblock %}

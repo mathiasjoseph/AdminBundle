@@ -1,8 +1,7 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block form_row -%}
-
-    <div class="form-group form-group-default{% if (not compound or force_error|default(false)) and not valid %} error {% endif %} {% if required -%} required{% endif %}">
+    <div class="{% if attr is not empty and attr.row_class is not empty %}{{ attr.row_class }}{% endif %} form-group form-group-default{% if (not compound or force_error|default(false)) and not valid %} error {% endif %} {% if required -%} required{% endif %}">
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
