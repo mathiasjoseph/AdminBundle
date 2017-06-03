@@ -1,5 +1,6 @@
 miky_grid:
     templates:
+        batch_action: "MikyAdminBundle:Grid/BatchAction:batch_action.html.twig"
         action:
             show: "MikyAdminBundle:Grid/Action:show.html.twig"
             create: "MikyAdminBundle:Grid/Action:create.html.twig"
