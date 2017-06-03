@@ -37,3 +37,11 @@
 {{ miky_grid_render(resources, 'MikyAdminBundle:Crud:_grid.html.twig') }}
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/mikyadmin/assets/js/grid.js') }}"></script>
+{% endblock %}
+{% block angular_js %}
+    {{ parent() }}
+<script src="{{ asset('bundles/mikyadmin/assets/js/angular/form_angular.js') }}"></script>
+{% endblock %}

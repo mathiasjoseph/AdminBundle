@@ -9,63 +9,62 @@
 {% set path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
 
-
 <div class="portlet-body">
 
 
-{% if data|length > 0 %}
-<div class="table-responsive">
-    <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer"><table class="table table-hover dataTable no-footer" id="basicTable" role="grid">
-            <thead>
-            <tr role="row" class="heading">
-                <th class="v-align-middle">
-                    <div class="checkbox ">
-                        <input type="checkbox" value="3" id="checkbox5">
-                        <label for="checkbox5"></label>
-                    </div>
-                </th>
-                {{ table.headers(grid, definition, app.request.attributes) }}
-            </tr>
+    {% if data|length > 0 %}
+        <div class="table-responsive">
+            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                <table class="table table-hover dataTable no-footer" id="basicTable" role="grid">
+                    <thead>
+                    <tr role="row" class="heading">
+                        <th class="v-align-middle">
+                            <div class="checkbox ">
+                                <input type="checkbox" value="" id="checkAll">
+                                <label for="checkAll"></label>
+                            </div>
+                        </th>
+                        {{ table.headers(grid, definition, app.request.attributes) }}
+                    </tr>
 
-               </thead>
-            <tbody>
-            <form method="get" action="{{ path }}">
-            <tr role="row" class="filter">
-                <td class="v-align-middle">
-                    <div class="checkbox ">
-                        <input type="checkbox" value="3" id="checkbox5">
-                        <label for="checkbox5"></label>
-                    </div>
-                </td>
-                {% for field in definition.fields|keys %}
+                    </thead>
+                    <tbody>
+                    <form method="get" action="{{ path }}">
+                        <tr role="row" class="filter">
+                            <td class="v-align-middle">
 
-                    {% if field in definition.filters|keys %}
-                        <td>{{ miky_grid_render_filter(grid, attribute(definition.filters, field)) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                {% endfor %}
-                <td>
-                    {{ buttons.filter() }}
-                    {{ buttons.resetFilters(path) }}
-                </td>
-            </tr></form>
-            {% for row in data %}
-<tr role="row" class="odd">
-                <td class="v-align-middle">
-                    <div class="checkbox ">
-                        <input type="checkbox" value="3" id="checkbox5">
-                        <label for="checkbox5"></label>
-                    </div>
-                </td>
-    {{ table.row(grid, definition, row) }}
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table></div>
-</div>
-{% else %}
-    {{ messages.info('miky_core.no_results_to_display'|trans) }}
-{% endif %}
-{{ pagination.render(data) }}
+                            </td>
+                            {% for field in definition.fields|keys %}
+
+                                {% if field in definition.filters|keys %}
+                                    <td>{{ miky_grid_render_filter(grid, attribute(definition.filters, field)) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}
+                            <td>
+                                {{ buttons.filter() }}
+                                {{ buttons.resetFilters(path) }}
+                            </td>
+                        </tr>
+                    </form>
+                    {% for row in data %}
+                        <tr role="row" class="odd">
+                            <td class="v-align-middle">
+                                <div class="checkbox ">
+                                    <input type="checkbox" value="{{ row.id }}" class="check-grid" id="checkbox{{ row.id }}">
+                                    <label for="checkbox{{ row.id }}"></label>
+                                </div>
+                            </td>
+                            {{ table.row(grid, definition, row) }}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        {{ messages.info('miky_core.no_results_to_display'|trans) }}
+    {% endif %}
+    {{ pagination.render(data) }}
 </div>
