@@ -8471,8 +8471,7 @@ div.cs-skin-slide .cs-options ul li span:hover, div.cs-skin-slide .cs-options ul
     font-weight: 600;
     font-family: 'Montserrat';
     font-size: 13px;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding: 20px;
     vertical-align: middle;
     border-bottom: 1px solid rgba(230, 230, 230, 0.7);
     color: rgba(44, 44, 44, 0.35);

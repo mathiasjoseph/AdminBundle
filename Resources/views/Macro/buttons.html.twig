@@ -45,7 +45,7 @@
     {% import _self as buttons %}
 
     {% if message is empty %}
-        {% set message = 'miky.ui.edit'|trans %}
+        {% set message = 'miky_core.edit'|trans %}
     {% endif %}
 
     {{ buttons.default(url, message, id, 'pencil', 'blue') }}
@@ -61,15 +61,6 @@
     {{ buttons.default(url, message, id, 'pencil', 'blue') }}
 {% endmacro %}
 
-{% macro generator(url, message, id) %}
-    {% import _self as buttons %}
-
-    {% if message is empty %}
-        {% set message = 'Générer'|trans %}
-    {% endif %}
-
-    {{ buttons.default(url, message, id, 'pencil', 'blue') }}
-{% endmacro %}
 {% macro validate(url, message, id) %}
     {% import _self as buttons %}
 

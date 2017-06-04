@@ -8,10 +8,8 @@
 
 {% set path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
-{{ miky_grid_render_batch_action(grid) }}
 
 <div class="portlet-body">
-
 
     {% if data|length > 0 %}
         <div class="table-responsive">
@@ -53,7 +51,7 @@
                         <tr role="row" class="odd">
                             <td>
                                 <div class="checkbox ">
-                                    <input type="checkbox" name="idx[]" value="{{ row.id }}" class="check-grid" id="checkbox{{ row.id }}">
+                                    <input type="checkbox" name="idx[]" value="{{ row.id }}" form="batch_action" class="check-grid" id="checkbox{{ row.id }}">
                                     <label for="checkbox{{ row.id }}"></label>
                                 </div>
                             </td>
@@ -68,4 +66,5 @@
         {{ messages.info('miky_core.no_results_to_display'|trans) }}
     {% endif %}
     {{ pagination.render(data) }}
+    <div class="text-right">{{ miky_grid_render_batch_action(grid) }}</div>
 </div>

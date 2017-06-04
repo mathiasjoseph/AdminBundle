@@ -1,5 +1,7 @@
 {#{% import 'MikyAdminBundle:Macro:buttons.html.twig' as buttons %}#}
 
-{{ form(form) }}
-{{ grid.requestConfiguration.getRouteName('validate') }}
-{#{{ buttons.validate(path(grid.requestConfiguration.getRouteName('validate'), {'id': data.id})) }}#}
+{{ form_start(form) }}
+{{ form_widget(form.batchAction, {'attr':
+    {'class': 'cs-select cs-skin-slide select-batch-action', 'data-init-plugin': 'cs-select', 'form':'batch_action'}}) }}
+{{ form_end(form) }}
+
