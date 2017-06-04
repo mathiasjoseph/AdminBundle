@@ -15,8 +15,9 @@
             <argument type="service" id="knp_menu.factory" />
             <argument type="service" id="event_dispatcher"/>
         </service>
-        <service id="miky_admin.menu.admin" class="Knp\Menu\MenuItem" factory-service="miky_admin.menu.admin_builder" factory-method="createMenu" scope="request">
-            <argument type="service" id="request" />
+        <service id="miky_admin.menu.admin" class="Knp\Menu\MenuItem">
+            <factory service="miky_admin.menu.admin_builder" method="createMenu" />
+            <argument type="service" id="request_stack" />
             <tag name="knp_menu.menu" alias="miky_admin.admin.main" />
         </service>
     </services>
