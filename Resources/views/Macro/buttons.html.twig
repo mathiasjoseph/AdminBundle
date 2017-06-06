@@ -73,19 +73,19 @@
 
 {% macro filter(message) %}
     <button class="btn btn-sm btn-success filter-submit margin-bottom">
-        <i class="fa fa-search"></i>{{ message is empty ? 'miky.ui.filter'|trans : message }}</button>
+        <i class="fa fa-search"></i>{{ message is empty ? 'miky_core.filter'|trans : message }}</button>
 
 {% endmacro %}
 
 {% macro resetFilters(url, message) %}
     <a class="btn btn-sm btn-default filter-cancel" href="{{ url }}">
-        <i class="fa fa-times"></i>{{ message is empty ? 'miky.ui.clear_filters'|trans : message }}</a>
+        <i class="fa fa-times"></i>{{ message is empty ? 'miky_core.clear_filters'|trans : message }}</a>
 {% endmacro %}
 
 {% macro delete(url, message) %}
 
 
     <a class="btn red" href="{{ url }}">
-        <i class="icon-trash"></i> {{ message is empty ? 'miky.ui.delete'|trans : message }}</a>
+        <i class="icon-trash"></i> {{ message is empty ? 'miky_core.delete'|trans : message }}</a>
 
 {% endmacro %}
