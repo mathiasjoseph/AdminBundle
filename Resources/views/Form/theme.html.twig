@@ -46,11 +46,16 @@
     {%- endif -%}
 {%- endblock form_label -%}
 {%- block choice_widget_collapsed -%}
+
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
         {% set required = false %}
     {%- endif -%}
     {% set attr = attr|merge({'class': 'form-control col-md-'}) %}
+{% if with_search_field == false and multiple == false %}
+    <select class="cs-select cs-skin-slide " {{ block('widget_attributes') }} data-init-plugin="cs-select">
+    {% else %}
     <select class="full-width" data-init-plugin="select2" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    {% endif %}
         {%- if placeholder is not none -%}
             <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
         {%- endif -%}
@@ -138,9 +143,8 @@
     <div class="{% if required %}{% endif %}form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
         {{- form_label(form) -}}
         {% set attr = attr|merge({'class': attr.class|default ~ ' ui dropdown'}) %}
-        <div class="col-md-9 form-group">
+
             {{- form_widget(form, {'attr': attr}) -}}
-        </div>
         {{- form_errors(form) -}}
     </div>
 {%- endblock choice_row %}
