@@ -7,6 +7,37 @@
         {{- form_errors(form) -}}
     </div>
 {%- endblock form_row %}
+{% block date_row -%}
+    <div class="{% if required %}{% endif %}form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+        {{- form_label(form) -}}
+        {% set attr = attr|merge({'class': attr.class|default ~ ' ui dropdown'}) %}
+
+         {{- form_widget(form, {'attr': attr}) -}}
+        {{- form_errors(form) -}}
+    </div>
+
+{%- endblock date_row %}
+{%- block date_widget -%}
+
+    {% if widget == 'single_text' %}
+    <div id="" class="datepicker-component input-group date col-sm-2">
+<input type="text" data-locale="{{ app.request.locale }}" class="form-control"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+</div>
+        {#{%- set type = type|default('text') -%}#}
+        {#<div id="datepicker-component" class="input-group date col-sm-8">#}
+{#<input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>#}
+{#</div>#}
+      {%- else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw -}}
+        </div>
+    {%- endif -%}
+{%- endblock date_widget -%}
+
 {%- block textarea_widget -%}
 
         <textarea style="
