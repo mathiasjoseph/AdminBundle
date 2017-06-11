@@ -2,7 +2,6 @@
 
 namespace Miky\Bundle\AdminBundle\Controller\Admin;
 
-use Miky\Bundle\ResourceBundle\Controller\ResourceController;
 use Miky\Bundle\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
 

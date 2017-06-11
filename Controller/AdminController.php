@@ -9,7 +9,6 @@
 namespace Miky\Bundle\AdminBundle\Controller;
 
 use Miky\Bundle\ResourceBundle\Controller\ResourceController;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AdminController extends ResourceController
 {

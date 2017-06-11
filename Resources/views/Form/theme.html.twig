@@ -37,6 +37,20 @@
         </div>
     {%- endif -%}
 {%- endblock date_widget -%}
+{% block miky_date_type_row -%}
+    <div class="{% if attr is not empty and attr.row_class is not empty %}{{ attr.row_class }}{% endif %}{% if required %}{% endif %}form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+        {{- form_label(form) -}}
+        {% set attr = attr|merge({'class': attr.class|default ~ ' ui dropdown'}) %}
+
+            {{- form_widget(form, {'attr': attr}) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock miky_date_type_row %}
+{%- block miky_date_type_widget -%}
+    <div id="" class="datepicker-component input-group date col-sm-2">
+<input type="text" {% if value is defined %} value="{{ value }}"{% endif %} data-locale="{{ app.request.locale }}" data-format="{{ format }}" name="{{ form.vars.full_name }}" class="form-control"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+</div>
+{%- endblock miky_date_type_widget -%}
 
 {%- block textarea_widget -%}
 
@@ -81,11 +95,12 @@
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
         {% set required = false %}
     {%- endif -%}
-    {% set attr = attr|merge({'class': 'form-control col-md-'}) %}
+    {% set attr = attr|merge({'class': 'form-control ' ~ (attr.class is defined ? ' ' ~ attr.class : '') ~ (errors|length > 0 ? ' error' : '')} ) %}
 {% if with_search_field == false and multiple == false %}
-    <select class="cs-select cs-skin-slide " {{ block('widget_attributes') }} data-init-plugin="cs-select">
+    {% set attr = attr|merge({'class': 'selectpicker ' ~ attr.class})%}
+    <select {{ block('widget_attributes') }}>
     {% else %}
-    <select class="full-width" data-init-plugin="select2" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select  data-init-plugin="select2" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
     {% endif %}
         {%- if placeholder is not none -%}
             <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>

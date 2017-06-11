@@ -1,7 +1,7 @@
 {#{% import 'MikyAdminBundle:Macro:buttons.html.twig' as buttons %}#}
-
+{% form_theme form '@MikyAdmin/Form/theme.html.twig' %}
 {{ form_start(form) }}
 {{ form_widget(form.batchAction, {'attr':
-    {'class': 'cs-select cs-skin-slide select-batch-action', 'data-init-plugin': 'cs-select', 'form':'batch_action'}}) }}
+    {'class': 'col-md-2 select-batch-action', 'form':'batch_action'}}) }}
 {{ form_end(form) }}
 

@@ -6756,6 +6756,7 @@ body.rtl .checkbox label::after {
 
 .form-group {
     margin-bottom: 10px;
+    padding-left: 12px !important;
 }
 
 .form-group label:not(.error) {

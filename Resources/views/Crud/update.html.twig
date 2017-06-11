@@ -18,7 +18,6 @@
         {{ headers.default(header|trans, configuration.vars.icon|default('plus'), configuration.vars.subheader|default(null)|trans) }}
 
         {{ form_start(form, {'action': path(configuration.getRouteName('update'), configuration.vars.route.parameters|default({ 'id': resource.id })), 'attr': {'class': '', 'novalidate': 'novalidate'}}) }}
-        <input type="hidden" name="_method" value="PUT" />
         <div class="col-md-12">
 
             <div class="actions btn-set text-right">

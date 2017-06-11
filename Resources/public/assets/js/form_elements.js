@@ -4,10 +4,22 @@
         var url = document.URL;
         return url.substr(0, url.lastIndexOf('/'));
     }
+
     $(document).ready(function () {
+
         $("#multi").val(["Jim", "Lucy"]).select2();
-        $('.datepicker-range, .datepicker-component, .datepicker-component2').datepicker({
-            language: 'fr'
+        $.fn.datepicker.Constructor.prototype.getFormat = function() {
+            return this.o.format;
+        };
+        $('.datepicker-range, .datepicker-component, .datepicker-component2').each(function(){
+            var locale = $(this).find("input[type=text]").data('locale');
+            var format = $(this).find("input[type=text]").data('format');
+            $(this).datepicker({
+                language: locale,
+                format: format
+
+            });
+
         });
         $('#datepicker-embeded').datepicker({daysOfWeekDisabled: "0,1"});
         var countries = new Bloodhound({
