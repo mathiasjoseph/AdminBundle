@@ -1,5 +1,5 @@
 {% extends 'form_div_layout.html.twig' %}
-
+{% import _self as macro %}
 {% block form_row -%}
     <div class="{% if attr is not empty and attr.row_class is not empty %}{{ attr.row_class }}{% endif %} form-group form-group-default{% if (not compound or force_error|default(false)) and not valid %} error {% endif %} {% if required -%} required{% endif %}">
         {{- form_label(form) -}}
@@ -217,16 +217,17 @@
 {%- endblock percent_widget %}
 
 {% block collection_widget -%}
-    {% from 'MikyResourceBundle:Macros:notification.html.twig' import error %}
+    {% import 'MikyResourceBundle:Macros:notification.html.twig' as notification %}
+    {% import _self as forms %}
     {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
 
     {% spaceless %}
         <div data-form-type="collection" {{ block('widget_container_attributes') }}
                 {% if prototype is defined and allow_add %}
-                    data-prototype='{{ _self.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+                    data-prototype='{{forms.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
                 {%- endif -%}
         >
-            {{ error(form.vars.errors) }}
+            {{ notification.error(form.vars.errors) }}
 
             {% if prototypes|default is iterable %}
                 {% for key, subPrototype in prototypes %}
@@ -235,7 +236,7 @@
                 {% endfor %}
             {% endif %}
 
-            <div data-form-collection="list">
+            <div class="panel-group" role="tablist" aria-multiselectable="true" data-form-collection="list">
                 {% for child in form %}
                     {{ _self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
                 {% endfor %}
@@ -253,17 +254,28 @@
 
 {% macro collection_item(form, allow_delete, button_delete_label, index) %}
     {% spaceless %}
-        <div data-form-collection="item" data-form-collection-index="{{ index }}">
-            {{ form_widget(form) }}
-            {% if allow_delete %}
+<div class="panel panel-default" data-form-collection="item" data-form-collection-index="{{ index }}">
+<div class="panel-heading" role="tab" id="headingOne">
+<h4 class="panel-title" style="display: flex">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+Collapsible Group Item
+  {% if allow_delete %}
                 <a href="#" data-form-collection="delete" class="ui red labeled icon button"
                    style="margin-bottom: 1em;">
                     <i class="trash icon"></i>
                     {{ button_delete_label|trans }}
                 </a>
             {% endif %}
-        </div>
-    {% endspaceless %}
+</a>
+</h4>
+</div>
+<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+<div class="panel-body">
+ {{ form_widget(form) }}
+</div>
+</div>
+</div>
+{% endspaceless %}
 {% endmacro %}
 
 {% block miky_province_widget %}

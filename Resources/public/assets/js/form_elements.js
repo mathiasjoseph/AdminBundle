@@ -1,3 +1,4 @@
+
 (function ($) {
     'use strict';
     var getBaseURL = function () {
@@ -5,7 +6,24 @@
         return url.substr(0, url.lastIndexOf('/'));
     }
 
+
+
+
     $(document).ready(function () {
+          jQuery("[data-form-collection='add']").click(function(e) {
+            e.preventDefault();
+            var collection = $(this).closest('[data-form-type="collection"]');
+            var list = $(collection).find('[data-form-collection="list"]');
+            var itemCount = $(list).find('[data-form-collection="item"]').length;
+            var newWidget = collection.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, itemCount);
+            list.append(newWidget);
+        });
+
+        $(document).on('click',"[data-form-collection='delete']",function(e){
+            e.preventDefault();
+            $(this).closest('[data-form-collection="item"]').remove();
+        });
 
         $("#multi").val(["Jim", "Lucy"]).select2();
         $.fn.datepicker.Constructor.prototype.getFormat = function() {
