@@ -19,7 +19,9 @@
             newWidget = newWidget.replace(/__name__/g, itemCount);
             list.append(newWidget);
         });
+        $('[data-form-collection="list"]').each(function(){
 
+        });
         $(document).on('click',"[data-form-collection='delete']",function(e){
             e.preventDefault();
             $(this).closest('[data-form-collection="item"]').remove();

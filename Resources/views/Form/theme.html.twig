@@ -236,7 +236,10 @@
                 {% endfor %}
             {% endif %}
 
-            <div class="panel-group" role="tablist" aria-multiselectable="true" data-form-collection="list">
+            <div {% if reference_property is not null %}
+            data-form-reference-property="{{ reference_property }}"
+            {% endif %}
+             class="panel-group" role="tablist" aria-multiselectable="true" data-form-collection="list">
                 {% for child in form %}
                     {{ _self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
                 {% endfor %}
