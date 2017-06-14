@@ -6901,6 +6901,12 @@ body.rtl .checkbox label::after {
     transition: opacity 0.2s ease;
 }
 
+.form-group label {
+    display: block;
+}
+.form-group .input-group[class*=col-] {
+    float: inherit;
+}
 .form-group-default label.label-lg {
     font-size: 13px;
     left: 13px;
