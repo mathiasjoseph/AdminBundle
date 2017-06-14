@@ -17,10 +17,28 @@
     </div>
 
 {%- endblock date_row %}
+{%- block miky_time_type_widget -%}
+{% set attr = attr|merge({'class': attr.class|default ~ ' input-group bootstrap-timepicker'}) %}
+    <div {{ block('widget_attributes') }}>
+<input  type="text" {% if value is defined %} value="{{ value }}"{% endif %} name="{{ form.vars.full_name }}"class="form-control timepicker">
+<span class="input-group-addon"><i class="pg-clock"></i></span>
+</div>
+{%- endblock miky_time_type_widget %}
+{% block miky_date_time_type_row -%}
+    <div class="{% if attr is not empty and attr.row_class is not empty %}{{ attr.row_class }}{% endif %} form-group{% if (not compound or force_error|default(false)) and not valid %} error {% endif %} {% if required -%} required{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock miky_date_time_type_row %}
+{%- block miky_date_time_type_widget -%}
+{{ form_widget(form.date, { 'attr': {'class': 'col-md-6'} }) }}
+{{ form_widget(form.time, { 'attr': {'class': 'col-md-6'} }) }}
+{%- endblock miky_date_time_type_widget -%}
 {%- block date_widget -%}
 
     {% if widget == 'single_text' %}
-    <div id="" class="datepicker-component input-group date col-sm-2">
+    <div id="" class="datepicker-component input-group date ">
 <input type="text" data-locale="{{ app.request.locale }}" class="form-control"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
         {#{%- set type = type|default('text') -%}#}
@@ -47,12 +65,14 @@
     </div>
 {%- endblock miky_date_type_row %}
 {%- block miky_date_type_widget -%}
-    <div id="" class="datepicker-component input-group date col-sm-2">
+{% set attr = attr|merge({'class': attr.class|default ~ ' datepicker-component input-group date'}) %}
+    <div  {{ block('widget_attributes') }}>
 <input type="text" {% if value is defined %} value="{{ value }}"{% endif %} data-locale="{{ app.request.locale }}" data-format="{{ format }}" name="{{ form.vars.full_name }}" class="form-control"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 {%- endblock miky_date_type_widget -%}
 
 {%- block textarea_widget -%}
+ {% set attr = attr|merge({'class': 'form-control ' ~ (attr.class is defined ? ' ' ~ attr.class : '') ~ (errors|length > 0 ? ' error' : '')} ) %}
 
         <textarea style="
     width: 100%;
@@ -215,7 +235,13 @@
         <div class="ui basic label">%</div>
     </div>
 {%- endblock percent_widget %}
-
+{% block collection_row -%}
+    <div class="{% if attr is not empty and attr.row_class is not empty %}{{ attr.row_class }}{% endif %} form-group {% if (not compound or force_error|default(false)) and not valid %} error {% endif %} {% if required -%} required{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock collection_row %}
 {% block collection_widget -%}
     {% import 'MikyResourceBundle:Macros:notification.html.twig' as notification %}
     {% import _self as forms %}
@@ -224,7 +250,7 @@
     {% spaceless %}
         <div data-form-type="collection" {{ block('widget_container_attributes') }}
                 {% if prototype is defined and allow_add %}
-                    data-prototype='{{forms.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+                    data-prototype='{{forms.collection_item(prototype, allow_delete, button_delete_label, '__name__', form)|e }}'
                 {%- endif -%}
         >
             {{ notification.error(form.vars.errors) }}
@@ -232,47 +258,47 @@
             {% if prototypes|default is iterable %}
                 {% for key, subPrototype in prototypes %}
                     <input type="hidden" data-form-prototype="{{ key }}"
-                           value="{{ _self.collection_item(subPrototype, allow_delete, button_delete_label, '__name__')|e }}"/>
+                           value="{{ forms.collection_item(subPrototype, allow_delete, button_delete_label, '__name__', form)|e }}"/>
                 {% endfor %}
             {% endif %}
+{% if prototype is defined and allow_add %}
 
+                <button type="button" data-form-collection="add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> {{ button_add_label|trans }}
+</button>
+            {% endif %}
             <div {% if reference_property is not null %}
             data-form-reference-property="{{ reference_property }}"
             {% endif %}
-             class="panel-group" role="tablist" aria-multiselectable="true" data-form-collection="list">
+             class="panel-group" id="{{ form.vars.full_name|replace({']': "_", '[': "_"}) }}" role="tablist" aria-multiselectable="true" data-form-collection="list">
                 {% for child in form %}
-                    {{ _self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
+                    {{ forms.collection_item(child, allow_delete, button_delete_label, loop.index0, form) }}
                 {% endfor %}
             </div>
 
-            {% if prototype is defined and allow_add %}
-                <a href="#" class="ui labeled icon button" data-form-collection="add">
-                    <i class="plus square outline icon"></i>
-                    {{ button_add_label|trans }}
-                </a>
-            {% endif %}
+
         </div>
     {% endspaceless %}
 {%- endblock collection_widget %}
 
-{% macro collection_item(form, allow_delete, button_delete_label, index) %}
-    {% spaceless %}
+{% macro collection_item(form, allow_delete, button_delete_label, index, formParent) %}
+
+
+{% spaceless %}
 <div class="panel panel-default" data-form-collection="item" data-form-collection-index="{{ index }}">
-<div class="panel-heading" role="tab" id="headingOne">
-<h4 class="panel-title" style="display: flex">
-<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-Collapsible Group Item
-  {% if allow_delete %}
-                <a href="#" data-form-collection="delete" class="ui red labeled icon button"
-                   style="margin-bottom: 1em;">
-                    <i class="trash icon"></i>
-                    {{ button_delete_label|trans }}
-                </a>
-            {% endif %}
+<div class="panel-heading" role="tab" id="heading{{ index }}">
+<h4 class="panel-title" >
+<a class="collapsed" data-toggle="collapse" data-form-collection="item-title" data-parent="#{{ formParent.vars.full_name|replace({']': "_", '[': "_"}) }}" href="#collapse{{ index }}" aria-expanded="false" aria-controls="collapse{{ index }}">
+{{ index }}
 </a>
 </h4>
+ {% if allow_delete %}
+ <a href="#" class="ui labeled icon button" data-form-collection="delete">
+                    <i  class="fa fa-trash" aria-hidden="true"></i>
+                    {{ button_delete_label|trans }}
+                    </a>
+{% endif %}
 </div>
-<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+<div id="collapse{{ index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ index }}">
 <div class="panel-body">
  {{ form_widget(form) }}
 </div>

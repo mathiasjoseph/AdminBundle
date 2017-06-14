@@ -18,9 +18,25 @@
             var newWidget = collection.attr('data-prototype');
             newWidget = newWidget.replace(/__name__/g, itemCount);
             list.append(newWidget);
+            $('[data-form-collection-index="'+itemCount+'"] [data-form-collection="item-title"]').click();
         });
-        $('[data-form-collection="list"]').each(function(){
 
+        $('[data-form-collection="list"]').each(function(){
+            var data = $(this).data("form-reference-property");
+            if(data != null){
+                $(document).on('change','[data-form-collection="list"] [name*="['+data+']"]',function(e){
+                    var value = $(this).val();
+                    var item = $(this).closest('[data-form-collection="item"]');
+                    var title = item.find('a[data-form-collection="item-title"]');
+                    title.html(value);
+                });
+                $(document).on('keypress','[data-form-collection="list"] [name*="['+data+']"]',function(e){
+                    var value = $(this).val();
+                    var item = $(this).closest('[data-form-collection="item"]');
+                    var title = item.find('a[data-form-collection="item-title"]');
+                    title.html(value);
+                });
+            }
         });
         $(document).on('click',"[data-form-collection='delete']",function(e){
             e.preventDefault();
@@ -31,6 +47,7 @@
         $.fn.datepicker.Constructor.prototype.getFormat = function() {
             return this.o.format;
         };
+        setInterval(function(){
         $('.datepicker-range, .datepicker-component, .datepicker-component2').each(function(){
             var locale = $(this).find("input[type=text]").data('locale');
             var format = $(this).find("input[type=text]").data('format');
@@ -41,6 +58,16 @@
             });
 
         });
+        }, 500);
+
+        setInterval(function(){
+        $('.timepicker').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
+            var widget = $('.bootstrap-timepicker-widget');
+            widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
+            widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
+        });
+        }, 500);
+        // $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
         $('#datepicker-embeded').datepicker({daysOfWeekDisabled: "0,1"});
         var countries = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -71,11 +98,7 @@
             console.log(start.toISOString(), end.toISOString(), label);
         });
 
-        $('.timepicker').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
-            var widget = $('.bootstrap-timepicker-widget');
-            widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
-            widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
-        });
+
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
         $(function ($) {
