@@ -1,4 +1,3 @@
-
 (function ($) {
     'use strict';
     var getBaseURL = function () {
@@ -7,10 +6,51 @@
     }
 
 
+    function onNewElement() {
+        $('[data-init-plugin="select2"]').select2();
+    }
+
+
+    function launchCasper() {
+        setInterval(function(){
+            $("[data-casper-name]").each(function(){
+                updateCasper(this);
+            });
+        }, 2000);
+        $(document).on('change', '[data-casper-name]', function () {
+            updateCasper(this);
+        });
+    }
+
+    function updateCasper(element) {
+        var hideArray = null;
+        var showArray = null;
+        var element = $(element);
+        var value = element.val();
+        if (element.data("casper-hide")) {
+            hideArray = element.data("casper-hide");
+            if (hideArray[value] != null) {
+                hideArray[value].forEach(function (item, index) {
+                    var group = element.closest("[data-casper-group]").data("casper-group");
+                    element.closest("[data-casper-group]").parent().find("[data-casper-group='" + group + "'] [data-casper-name='" + item + "']").closest("[data-casper-group]").hide();
+                })
+            }
+        }
+        if (element.data("casper-show")) {
+            showArray = element.data("casper-show");
+            if (showArray[value] != null) {
+                showArray[value].forEach(function (item, index) {
+                    var group = element.closest("[data-casper-group]").data("casper-group");
+                    element.closest("[data-casper-group]").parent().find("[data-casper-group='" + group + "'] [data-casper-name='" + item + "']").closest("[data-casper-group]").show();
+                })
+            }
+        }
+    }
 
 
     $(document).ready(function () {
-          jQuery("[data-form-collection='add']").click(function(e) {
+        launchCasper();
+        jQuery("[data-form-collection='add']").click(function (e) {
             e.preventDefault();
             var collection = $(this).closest('[data-form-type="collection"]');
             var list = $(collection).find('[data-form-collection="list"]');
@@ -18,19 +58,20 @@
             var newWidget = collection.attr('data-prototype');
             newWidget = newWidget.replace(/__name__/g, itemCount);
             list.append(newWidget);
-            $('[data-form-collection-index="'+itemCount+'"] [data-form-collection="item-title"]').click();
+            $('[data-form-collection-index="' + itemCount + '"] [data-form-collection="item-title"]').click();
+            onNewElement();
         });
 
-        $('[data-form-collection="list"]').each(function(){
+        $('[data-form-collection="list"]').each(function () {
             var data = $(this).data("form-reference-property");
-            if(data != null){
-                $(document).on('change','[data-form-collection="list"] [name*="['+data+']"]',function(e){
+            if (data != null) {
+                $(document).on('change', '[data-form-collection="list"] [name*="[' + data + ']"]', function (e) {
                     var value = $(this).val();
                     var item = $(this).closest('[data-form-collection="item"]');
                     var title = item.find('a[data-form-collection="item-title"]');
                     title.html(value);
                 });
-                $(document).on('keypress','[data-form-collection="list"] [name*="['+data+']"]',function(e){
+                $(document).on('keypress', '[data-form-collection="list"] [name*="[' + data + ']"]', function (e) {
                     var value = $(this).val();
                     var item = $(this).closest('[data-form-collection="item"]');
                     var title = item.find('a[data-form-collection="item-title"]');
@@ -38,34 +79,36 @@
                 });
             }
         });
-        $(document).on('click',"[data-form-collection='delete']",function(e){
+
+
+        $(document).on('click', "[data-form-collection='delete']", function (e) {
             e.preventDefault();
             $(this).closest('[data-form-collection="item"]').remove();
         });
 
         $("#multi").val(["Jim", "Lucy"]).select2();
-        $.fn.datepicker.Constructor.prototype.getFormat = function() {
+        $.fn.datepicker.Constructor.prototype.getFormat = function () {
             return this.o.format;
         };
-        setInterval(function(){
-        $('.datepicker-range, .datepicker-component, .datepicker-component2').each(function(){
-            var locale = $(this).find("input[type=text]").data('locale');
-            var format = $(this).find("input[type=text]").data('format');
-            $(this).datepicker({
-                language: locale,
-                format: format
+        setInterval(function () {
+            $('.datepicker-range, .datepicker-component, .datepicker-component2').each(function () {
+                var locale = $(this).find("input[type=text]").data('locale');
+                var format = $(this).find("input[type=text]").data('format');
+                $(this).datepicker({
+                    language: locale,
+                    format: format
+
+                });
 
             });
-
-        });
         }, 500);
 
-        setInterval(function(){
-        $('.timepicker').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
-            var widget = $('.bootstrap-timepicker-widget');
-            widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
-            widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
-        });
+        setInterval(function () {
+            $('.timepicker').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
+                var widget = $('.bootstrap-timepicker-widget');
+                widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
+                widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
+            });
         }, 500);
         // $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
         $('#datepicker-embeded').datepicker({daysOfWeekDisabled: "0,1"});

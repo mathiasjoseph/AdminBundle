@@ -24,17 +24,15 @@ class ChoiceTypeExtension extends AbstractTypeExtension
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('with_search_field'));
+        $resolver->setDefined(array('simple_select'));
+        $resolver->setDefaults(array(
+            "simple_select" => false
+        ));
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (isset($options['with_search_field']) && $options["with_search_field"]) {
-
-            $view->vars['with_search_field'] = true;
-        }else{
-            $view->vars['with_search_field'] = false;
-        }
+        $view->vars['simple_select'] = $options["simple_select"];
     }
 
 }
