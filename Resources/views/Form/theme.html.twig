@@ -238,14 +238,28 @@
         </div>
     </div>
 {%- endblock radio_row %}
-
-{% block money_widget -%}
-    <div class="ui labeled input">
-        <div class="ui label"></div>
+{% block money_row -%}
+<div class="col-sm-4">
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group form-group-default form-group-money input-group"}) %}
+{% if (not compound or force_error|default(false)) and not valid %}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
+{% endif %}
+{% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
+    <div {{ block('row_attributes') }}>
+        {{- form_label(form) -}}
         {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
     </div>
-{%- endblock money_widget %}
+    </div>
+{%- endblock money_row %}
+{%- block money_widget -%}
+{% set attr = attr|merge({'class': attr.class|default ~ ' form-control'}) %}
+<input type="text" {% if value is defined %} value="{{ value }}"{% endif %} name="{{ form.vars.full_name }}" {{ block('widget_attributes') }}>
 
+    <span class="input-group-addon">
+{{ currency }}
+</span>
+{%- endblock money_widget -%}
 
 
 {%- block choice_widget_expanded -%}
@@ -410,11 +424,9 @@
         <div class="row">
             <div class="col-md-4 pull-left">
                 {% if value is not empty and value.providerReference %}
-
                         <strong>{{ value.name }}</strong>
                 {% endif %}
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-4 pull-left">
