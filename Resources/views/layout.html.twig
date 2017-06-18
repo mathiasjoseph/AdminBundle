@@ -26,7 +26,7 @@
 </head>
 {% endblock %}
 {% block body %}
-<body class="fixed-header dashboard">
+<body {% block body_attributs %}ng-app="AdminApp" class="fixed-header dashboard"{% endblock %}>
 {% block page %}
 {% block sidebar_wrapper %}
     {% include 'MikyAdminBundle::_sidebar.html.twig'%}
