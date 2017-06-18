@@ -47,7 +47,12 @@
         }
     }
 
-
+    function setItemTitleCollection(element) {
+        var value = $(element).val();
+        var item = $(element).closest('[data-form-collection="item"]');
+        var title = item.find('a[data-form-collection="item-title"]');
+        title.html(value);
+    }
     $(document).ready(function () {
         launchCasper();
         jQuery("[data-form-collection='add']").click(function (e) {
@@ -62,21 +67,17 @@
             onNewElement();
         });
 
+
         $('[data-form-collection="list"]').each(function () {
             var data = $(this).data("form-reference-property");
             if (data != null) {
+                if (!Array.isArray(data)){
                 $(document).on('change', '[data-form-collection="list"] [name*="[' + data + ']"]', function (e) {
-                    var value = $(this).val();
-                    var item = $(this).closest('[data-form-collection="item"]');
-                    var title = item.find('a[data-form-collection="item-title"]');
-                    title.html(value);
+                    setItemTitleCollection(this);
                 });
                 $(document).on('keypress', '[data-form-collection="list"] [name*="[' + data + ']"]', function (e) {
-                    var value = $(this).val();
-                    var item = $(this).closest('[data-form-collection="item"]');
-                    var title = item.find('a[data-form-collection="item-title"]');
-                    title.html(value);
-                });
+                    setItemTitleCollection(this);
+                });}
             }
         });
 

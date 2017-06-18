@@ -38,12 +38,7 @@
     </div>
 {%- endblock choice_row %}
 {% block date_row -%}
-{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
-{% if (not compound or force_error|default(false)) and not valid %}
-{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
-{% endif %}
-{% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
-    <div {{ block('row_attributes') }}>
+   <div {{ block('row_attributes') }}>
         {{- form_label(form) -}}
         {% set attr = attr|merge({'class': attr.class|default ~ ' ui dropdown'}) %}
 
@@ -66,7 +61,7 @@
 {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
 {% endif %}
 {% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
-    <div {{ block('widget_attributes') }}>
+    <div {{ block('row_attributes') }}>
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
@@ -97,8 +92,13 @@
     {%- endif -%}
 {%- endblock date_widget -%}
 {% block miky_date_type_row -%}
-    <div class="{% if attr is not empty and attr.row_class is not empty %}{{ attr.row_class }}{% endif %}{% if required %}{% endif %} form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
-        {{- form_label(form) -}}
+    {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
+{% if (not compound or force_error|default(false)) and not valid %}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
+{% endif %}
+{% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
+    <div {{ block('row_attributes') }}>
+         {{- form_label(form) -}}
         {% set attr = attr|merge({'class': attr.class|default ~ ' ui dropdown'}) %}
 
             {{- form_widget(form, {'attr': attr}) -}}
