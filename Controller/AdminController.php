@@ -13,4 +13,5 @@ use Miky\Bundle\ResourceBundle\Controller\ResourceController;
 class AdminController extends ResourceController
 {
 // @TODO
+
 }
