@@ -194,10 +194,14 @@
         {%- endfor -%}
     {%- endif -%}
 {%- endblock form_errors -%}
-
+{%- block checkbox_widget -%}
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if value == true %} checked="checked"{% endif %} />
+{%- endblock checkbox_widget -%}
 {% block checkbox_row -%}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
 
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+<div class="checkbox check-success  ">
+{{- form_widget(form) -}}
         {% set label_attr = label_attr|merge({'class': 'col-md-3'}) %}
         {% if label is not same as(false) -%}
             {% if not compound -%}
@@ -218,14 +222,12 @@
             <span class="required" aria-required="true"> * </span>
         {%- endif -%}</label>
         {%- endif -%}
-        <div class="col-md-9 form-group">
-
-            {{- form_widget(form) -}}
 
 
-        </div>
-        {{- form_errors(form) -}}
 
+
+    </div>
+     {{- form_errors(form) -}}
     </div>
 {%- endblock checkbox_row %}
 
@@ -305,7 +307,7 @@
             {% if prototypes|default is iterable %}
                 {% for key, subPrototype in prototypes %}
                     <input type="hidden" data-form-prototype="{{ key }}"
-                           value="{{ forms.collection_item(subPrototype, allow_delete, button_delete_label, '__name__', form)|e }}"/>
+                           value="{{ forms.collection_item(subPrototype, allow_delete, button_delete_label, '__name__', formattedFullName)|e }}"/>
                 {% endfor %}
             {% endif %}
 {% if prototype is defined and allow_add %}
@@ -318,7 +320,7 @@
             {% endif %}
              class="panel-group" id="{{ formattedFullName }}" role="tablist" aria-multiselectable="true" data-form-collection="list">
                 {% for child in form %}
-                    {{ forms.collection_item(child, allow_delete, button_delete_label, loop.index0, form) }}
+                    {{ forms.collection_item(child, allow_delete, button_delete_label, loop.index0, formattedFullName) }}
                 {% endfor %}
             </div>
 

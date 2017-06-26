@@ -66,7 +66,16 @@
             $('[data-form-collection-index="' + itemCount + '"] [data-form-collection="item-title"]').click();
             onNewElement();
         });
+        $(document).on('click', '.checkbox', function (e) {
+            $(this).find(":checkbox").each(function(){
+                if( $(this).is(':checked') ){
+                    $(this).val(1);
+                }else{
+                    $(this).val(0);
+                }
+            });
 
+        });
 
         $('[data-form-collection="list"]').each(function () {
             var data = $(this).data("form-reference-property");
