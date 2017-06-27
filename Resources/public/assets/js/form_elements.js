@@ -12,11 +12,9 @@
 
 
     function launchCasper() {
-        setInterval(function(){
-            $("[data-casper-name]").each(function(){
-                updateCasper(this);
-            });
-        }, 2000);
+        $.initialize("[data-casper-name]", function() {
+            updateCasper(this);
+        });
         $(document).on('change', '[data-casper-name]', function () {
             updateCasper(this);
         });
@@ -100,18 +98,17 @@
         $.fn.datepicker.Constructor.prototype.getFormat = function () {
             return this.o.format;
         };
-        setInterval(function () {
-            $('.datepicker-range, .datepicker-component, .datepicker-component2').each(function () {
-                var locale = $(this).find("input[type=text]").data('locale');
-                var format = $(this).find("input[type=text]").data('format');
-                $(this).datepicker({
-                    language: locale,
-                    format: format
 
-                });
+        $.initialize(".datepicker-range, .datepicker-component, .datepicker-component2", function() {
+            var locale = $(this).find("input[type=text]").data('locale');
+            var format = $(this).find("input[type=text]").data('format');
+            $(this).datepicker({
+                language: locale,
+                format: format
 
             });
-        }, 500);
+        });
+
 
         setInterval(function () {
             $('.timepicker').timepicker({showMeridian: false}).on('show.timepicker', function (e) {

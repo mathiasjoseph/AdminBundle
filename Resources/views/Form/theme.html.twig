@@ -120,6 +120,28 @@
     height: 250px;
 "{{ block('widget_attributes') }}>{{ value }}</textarea>
 {%- endblock textarea_widget -%}
+
+{%- block tinymce_widget -%}
+
+ {% set attr = attr|merge({'class': 'form-control tinymce ' ~ (attr.class is defined ? ' ' ~ attr.class : '') ~ (errors|length > 0 ? ' error' : '')} ) %}
+
+        <textarea style="
+    width: 100%;
+    height: 250px;
+"{{ block('widget_attributes') }}>{{ value }}</textarea>
+{%- endblock tinymce_widget -%}
+{% block tinymce_row -%}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
+{% if (not compound or force_error|default(false)) and not valid %}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
+{% endif %}
+{% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
+    <div {{ block('row_attributes') }}>
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock tinymce_row %}
 {%- block form_widget_compound -%}
 
         {%- if form.parent is empty -%}

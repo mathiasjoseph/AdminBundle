@@ -5337,6 +5337,7 @@ body > .pgn-wrapper {
 
 .nav-tabs-simple > li.active:after, .nav-tabs-simple > li:hover:after {
     height: 3px;
+    margin-top: -3px;
 }
 
 .nav-tabs-simple.nav-tabs-left:after, .nav-tabs-simple.nav-tabs-right:after {

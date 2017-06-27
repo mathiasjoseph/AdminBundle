@@ -14,7 +14,8 @@
   ],
   "require" : {
     "mikycorp/corebundle": "~1.0",
-    "mikycorp/mediabundle": "~1.0"
+    "mikycorp/mediabundle": "~1.0",
+    "mikycorp/editorbundle": "~1.0"
   },
   "autoload" : {
     "psr-0" : {
