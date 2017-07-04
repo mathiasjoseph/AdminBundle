@@ -41,7 +41,17 @@
     <div class="page-content-wrapper ">
         <div class="content sm-gutter">
             {% block content_wrapper %}
+
             <div class="container-fluid padding-25 sm-padding-10">
+				{% block breadcrumb_wrapper %}
+                <ul class="breadcrumb">
+					{% block breadcrumb %}
+                    <li>
+                        <a href="{{ path("miky_admin_admin_dashboard") }}">{{ "miky_core.home"|trans }}</a>
+                    </li>
+					{% endblock %}
+                </ul>
+				{% endblock %}
                 {% block content %}
 
                 {% endblock %}

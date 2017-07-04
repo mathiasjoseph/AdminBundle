@@ -9,6 +9,12 @@
 {% set header = configuration.vars.header|default(metadata.applicationName~'.'~metadata.pluralName) %}
 
 {% block title %}{{ parent() }} {{ header|trans }}{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <a>{{ header|trans }}</a>
+    </li>
+{% endblock %}
 {% block breadcrumb_elements %}
 {% include configuration.vars.templates.breadcrumb|default('MikyAdminBundle:Crud/Breadcrumb:_index.html.twig') %}
 {% endblock %}
