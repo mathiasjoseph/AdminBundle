@@ -6268,7 +6268,9 @@ input[type="radio"], input[type="checkbox"] {
 select[multiple], select[size] {
     height: auto !important;
 }
-
+.form-group span.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
 input:focus, select:focus, textarea:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focus {
     outline: none;
     -webkit-box-shadow: none;
