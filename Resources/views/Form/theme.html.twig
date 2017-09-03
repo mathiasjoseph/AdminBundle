@@ -23,6 +23,39 @@
         {{- form_errors(form) -}}
     </div>
 {%- endblock form_row %}
+{% block translatable_row -%}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ ""}) %}
+{% if (not compound or force_error|default(false)) and not valid %}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
+{% endif %}
+{% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
+    <div {{ block('row_attributes') }}>
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock translatable_row %}
+{% block translatable_widget %}
+<ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="collapse">
+
+        {% for locale in locales %}
+
+        <li class="{% if app.request.locale == locale %}active{% endif %}">
+            <a data-toggle="tab" href="#{{ attribute(form, locale).vars.unique_block_prefix }}">{{ locale|upper }}</a>
+        </li>
+        {% endfor %}
+</ul>
+<div class="tab-content">
+    {% for locale in locales %}
+        <div class="tab-pane {% if app.request.locale == locale %}active{% endif %}" id="{{ attribute(form, locale).vars.unique_block_prefix }}">
+            <div class="row column-seperation">
+            {{- form_widget(attribute(form, locale)) -}}
+			{{- form_errors(attribute(form, locale)) -}}
+            </div>
+        </div>
+   {% endfor %}
+</div>
+{% endblock translatable_widget %}
 {% block choice_row -%}
 {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
 {% if (not compound or force_error|default(false)) and not valid %}
