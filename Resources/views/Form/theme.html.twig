@@ -24,7 +24,7 @@
     </div>
 {%- endblock form_row %}
 {% block translatable_row -%}
-{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ ""}) %}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
 {% if (not compound or force_error|default(false)) and not valid %}
 {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
 {% endif %}
@@ -37,9 +37,7 @@
 {%- endblock translatable_row %}
 {% block translatable_widget %}
 <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="collapse">
-
         {% for locale in locales %}
-
         <li class="{% if app.request.locale == locale %}active{% endif %}">
             <a data-toggle="tab" href="#{{ attribute(form, locale).vars.unique_block_prefix }}">{{ locale|upper }}</a>
         </li>
