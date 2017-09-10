@@ -12,5 +12,6 @@ miky_grid:
             generator: "MikyAdminBundle:Grid/Action:generator.html.twig"
         filter:
             string: "MikyAdminBundle:Grid/Filter:string.html.twig"
+            translatable_string: "MikyAdminBundle:Grid/Filter:string.html.twig"
             boolean: "MikyAdminBundle:Grid/Filter:boolean.html.twig"
 

@@ -12,14 +12,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro categoryName(category) %}
-    {% import _self as labels %}
 
-    {% if category != null %}
-
-        <span >{{ category.name }}</span>
-    {% endif %}
-{% endmacro %}
 
 {% macro default(text) %}
     <span class="ui label">

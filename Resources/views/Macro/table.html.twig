@@ -15,7 +15,7 @@
         {% endif %}
     {% endfor %}
     {% if definition.actionGroups.item is defined and definition.getActions('item')|length > 0 %}
-        <th>{{ 'miky.ui.actions'|trans }}</th>
+        <th>{{ 'miky_core.actions'|trans }}</th>
     {% endif %}
 {% endmacro %}
 
@@ -25,11 +25,11 @@
     {% endfor %}
     {% if definition.actionGroups.item is defined and definition.getActions('item')|length > 0 %}
         <td>
+			{% for action in definition.getActions('item') %}
             <div class="btn-group btn-group-xs btn-group-solid btn-group-vertical">
-                {% for action in definition.getActions('item') %}
                     {{ miky_grid_render_action(grid, action, row) }}
-                {% endfor %}
             </div>
+			{% endfor %}
         </td>
     {% endif %}
 {% endmacro %}
