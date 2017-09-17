@@ -26,7 +26,7 @@ class ChoiceTypeExtension extends AbstractTypeExtension
     {
         $resolver->setDefined(array('simple_select'));
         $resolver->setDefaults(array(
-            "simple_select" => false
+            "simple_select" => true
         ));
     }
 

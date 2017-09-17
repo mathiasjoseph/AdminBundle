@@ -209,11 +209,12 @@
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
         {% set required = false %}
     {%- endif -%}
-    {% set attr = attr|merge({'class': 'form-control ' ~ (attr.class is defined ? ' ' ~ attr.class : '') ~ (errors|length > 0 ? ' error' : '')} ) %}
+    {#{% set attr = attr|merge({'class': 'form-control ' ~ (attr.class is defined ? ' ' ~ attr.class : '') ~ (errors|length > 0 ? ' error' : '')} ) %}#}
 {% if simple_select == true and multiple == false %}
-    {% set attr = attr|merge({'class': 'selectpicker ' ~ attr.class})%}
+    {% set attr = attr|merge({'class': 'cs-select cs-skin-slide ' ~ attr.class, "data-init-plugin": "cs-select"})%}
     <select {{ block('widget_attributes') }}>
     {% else %}
+    {% set attr = attr|merge({'class': 'full-width ' ~ attr.class})%}
     <select  data-init-plugin="select2" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
     {% endif %}
         {%- if placeholder is not none -%}
@@ -230,6 +231,14 @@
         {{- block('choice_widget_options') -}}
     </select>
 {%- endblock choice_widget_collapsed -%}
+{%- block tags_type_widget -%}
+    {%- set type = type|default('text') -%}
+
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' tagsinput custom-tag-input')|trim }) %}
+
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+
+{%- endblock tags_type_widget -%}
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
 
