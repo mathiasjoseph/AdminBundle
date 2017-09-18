@@ -36,6 +36,7 @@
     </div>
 {%- endblock translatable_row %}
 {% block translatable_widget %}
+
 <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="collapse">
         {% for locale in locales %}
         <li class="{% if app.request.locale == locale %}active{% endif %}">
@@ -47,7 +48,7 @@
     {% for locale in locales %}
         <div class="tab-pane {% if app.request.locale == locale %}active{% endif %}" id="{{ attribute(form, locale).vars.unique_block_prefix }}">
             <div class="row column-seperation">
-            {{- form_widget(attribute(form, locale)) -}}
+            {{- form_widget(attribute(form, locale), {"required": attribute(required_options, locale)}) -}}
 			{{- form_errors(attribute(form, locale)) -}}
             </div>
         </div>
