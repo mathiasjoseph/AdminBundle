@@ -261,8 +261,13 @@
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if value == true %} checked="checked"{% endif %} />
 {%- endblock checkbox_widget -%}
 {% block checkbox_row -%}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
+{% if (not compound or force_error|default(false)) and not valid %}
+{% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
+{% endif %}
+{% if required -%} {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " required"}) %}{% endif %}
 
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} error{% endif %}">
+    <div {{ block('row_attributes') }}>
 <div class="checkbox check-success  ">
 {{- form_widget(form) -}}
         {% set label_attr = label_attr|merge({'class': 'col-md-3'}) %}
@@ -304,7 +309,7 @@
     </div>
 {%- endblock radio_row %}
 {% block money_row -%}
-<div class="col-sm-4">
+
 {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group form-group-default form-group-money input-group"}) %}
 {% if (not compound or force_error|default(false)) and not valid %}
 {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " error"}) %}
@@ -314,7 +319,6 @@
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
-    </div>
     </div>
 {%- endblock money_row %}
 {%- block money_widget -%}
