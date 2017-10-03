@@ -158,7 +158,6 @@
             $("#ssn").mask("999-99-9999");
         });
         $('.autonumeric').autoNumeric('init');
-        $("div#myId").dropzone({url: "/file/post"});
         $('.custom-tag-input').tagsinput({});
         var myCustomTemplates = {
             "font-styles": function (locale) {
@@ -177,13 +176,7 @@
                 return '<li>' + '<div class="btn-group">' + '<a tabindex="-1" title="Edit HTML" data-wysihtml5-action="change_view" class="btn  btn-default" href="javascript:;" unselectable="on">' + '<i class="editor-icon editor-icon-html"></i>' + '</a>' + '</div>' + '</li>'
             }
         }
-        setTimeout(function () {
-            $('#wysiwyg5').wysihtml5({
-                html: true,
-                stylesheets: ["pages/css/editor.css"],
-                customTemplates: myCustomTemplates
-            });
-        }, 500);
+
         $('#summernote').summernote({
             height: 200, onfocus: function (e) {
                 $('body').addClass('overlay-disabled');

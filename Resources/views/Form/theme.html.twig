@@ -453,66 +453,77 @@
     </div>
 {% endblock %}
 
+{% block miky_dropzone_multiple_widget %}
+<div id="{{ form.vars.id }}" class="form_dropzone dropzone"
+data-media-token="{{ form.children.mediaToken.vars.value }}"
+data-media-context="{{ context }}"
+data-media-provider="{{ provider }}"
+data-media-max-files="{{ max_files }}"
+>
 
-{#{% block miky_media_type_widget %}#}
-    {#{{ dump(form) }}#}
-    {#<div class="form-group last">#}
+  <div class="preview" style="display:none">
+  {{ form_widget(form.mediaToken) }}
+    {% for media in value %}
+{% thumbnail media, 'admin' with {'data-media-id': media.id }%}
+{% endfor %}
+  </div>
 
-        {#<div class="col-md-8">#}
-            {#<div class="fileinput fileinput-new" data-provides="fileinput">#}
-                {#<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">#}
+  <div class="fallback">
+    {{ block('form_widget') }}
+  </div>
+</div>
+{% endblock %}
 
-                    {#{% if value is not empty and value.providerReference %}#}
-                        {#{% media value, 'admin' with {'class': 'img-polaroid media-object'} %}#}
-                    {#{% else %}#}
-                        {#<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />#}
-                    {#{% endif %}#}
-                {#</div>#}
-                {#<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>#}
-                {#<div>#}
-                                                            {#<span class="btn default btn-file">#}
-                                                                {#<span class="fileinput-new"> Selectionner une image </span>#}
-                                                                {#<span class="fileinput-exists">Changer d'image</span>#}
-                                                                {#<input type="file"#}
-                                                                {#name="{{ form.children.binaryContent.vars.full_name }}"#}
-                                                                       {#id="{{ form.children.binaryContent.vars.id }}"#}
-                                                                {#>#}
-                                                            {#</span>#}
-                    {#<span style="display: none !important;" ><input style="display: none !important;" type="checkbox" id="{{ form.children.unlink.vars.full_name }}" name="{{ form.children.unlink.vars.full_name }}" class="unlink" {% if form.children.unlink.vars.value is not empty %}value="{{ form.children.unlink.vars.value }}" {% endif %}></span>#}
-                    {#<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Retirer </a>#}
-                {#</div>#}
-            {#</div>#}
+{% block miky_dropzone_widget %}
+<div id="{{ form.vars.id }}" class="form_dropzone dropzone"
+data-media-token="{{ form.children.mediaToken.vars.value }}"
+data-media-context="{{ context }}"
+data-media-provider="{{ provider }}"
+data-media-max-files="1"
+>
 
-        {#</div>#}
-    {#</div>#}
+  <div class="preview" style="display:none">
+  {{ form_widget(form.mediaToken) }}
+{% thumbnail value, 'admin' with {'data-media-id': value.id }%}
+  </div>
 
-{#{% endblock miky_media_type_widget %}#}
+  <div class="fallback">
+    {{ block('form_widget') }}
+  </div>
+</div>
+{% endblock %}
 
 {% block miky_media_type_widget %}
+<div class="dropzone">
+  <div class="fallback">
+    <input name="file" type="file" multiple />
+  </div>
+</div>
+        {#<div class="row">#}
+            {#<div class="col-md-4 pull-left">#}
+                {#{% if value is not empty and value.providerReference %}#}
+                        {#<strong>{{ value.name }}</strong>#}
+                {#{% endif %}#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="row">#}
+            {#<div class="col-md-4 pull-left">#}
+                {#{% if value is not empty and value.providerReference %}#}
+                    {#<div class="pull-left" style="margin-right: 5px">#}
+                        {#{% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}#}
+                    {#</div>#}
+                {#{% else %}#}
+                    {#<div class="pull-left" style="margin-right: 5px">#}
+                        {#<img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>#}
+                    {#</div>#}
+                {#{% endif %}#}
+            {#</div>#}
 
-        <div class="row">
-            <div class="col-md-4 pull-left">
-                {% if value is not empty and value.providerReference %}
-                        <strong>{{ value.name }}</strong>
-                {% endif %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 pull-left">
-                {% if value is not empty and value.providerReference %}
-                    <div class="pull-left" style="margin-right: 5px">
-                        {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
-                    </div>
-                {% else %}
-                    <div class="pull-left" style="margin-right: 5px">
-                        <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
-                    </div>
-                {% endif %}
-            </div>
+            {#<div class="col-md-2 pull-left">#}
+                {#{{ block('form_widget') }}#}
+            {#</div>#}
+        {#</div>#}
 
-            <div class="col-md-2 pull-left">
-                {{ block('form_widget') }}
-            </div>
-        </div>
-
+  {{ block('form_widget') }}
+  {{ dump(form) }}
 {% endblock miky_media_type_widget %}
