@@ -1,4 +1,0 @@
-miky_admin_admin_core:
-    resource: "@MikyAdminBundle/Resources/config/routing/core.yml"
-    prefix: /%miky_admin.admin_path%
-
