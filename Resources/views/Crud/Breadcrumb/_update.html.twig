@@ -1,0 +1,11 @@
+{% import 'MikyAdminBundle:Crud/Macro:breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+        { label: 'miky.ui.administration'|trans, url: path('miky_admin_dashboard') },
+        { label: (metadata.applicationName~'.'~metadata.pluralName)|trans, url: path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({})) },
+        { label: resource.code|default(resource.id)},
+        { label: 'miky.ui.edit'|trans }
+    ]
+%}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

@@ -1,0 +1,41 @@
+{% macro link(paginator, number) %}
+    <li>
+        <a class="{% if number == paginator.currentPage %}active {% endif %}"
+           href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'page': number})) }}">{{ number }}</a>
+    </li>
+
+{% endmacro %}
+
+{% macro render(paginator) %}
+    {% import _self as pagination %}
+
+
+
+    {% if paginator.haveToPaginate() %}
+        <div class="row">
+            <div class="col-md-2 col-sm-5">
+                <div class="dataTables_info" id="sample_1_info" role="status"
+                     aria-live="polite">{{ 'miky_core.number_of_results'|trans }}: {{ paginator.nbResults }}.
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-8">
+                <div class="dataTables_paginate paging_bootstrap_full_number" id="sample_1_paginate">
+                    <ul class="pagination" style="visibility: visible;">
+                        <li class="prev disabled"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'page': 1})) }}" title="First"><i class="fa fa-angle-double-left"></i></a>
+                        </li>
+                        <li class="prev disabled"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'page': paginator.currentPage-1})) }}" title="Prev"><i class="fa fa-angle-left"></i></a></li>
+                        {% for number in 1..paginator.nbPages %}
+                            {% if number < paginator.currentPage + 3  and number > paginator.currentPage - 3 %}
+                                {{ pagination.link(paginator, number) }}
+                            {% endif %}
+                        {% endfor %}
+                        <li class="next"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'page': paginator.currentPage+1})) }}" title="Next"><i class="fa fa-angle-right"></i></a></li>
+                        <li class="next"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'page': paginator.nbPages})) }}" title="Last"><i class="fa fa-angle-double-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+

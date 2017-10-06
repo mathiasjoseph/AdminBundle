@@ -1,0 +1,83 @@
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikycore/plugins/jquery.initialize/jquery.initialize.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrapv3/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery/jquery-easy.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-unveil/jquery.unveil.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-bez/jquery.bez.min.js') }}"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-ios-list/jquery.ioslist.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-actual/jquery.actual.min.js') }}"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/mikyadmin/assets/plugins/select2/js/select2.full.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/mikyadmin/assets/plugins/classie/classie.js') }}"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/switchery/js/switchery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/mapplic/js/hammer.js') }}"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/mapplic/js/mapplic.js') }}"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/mikyadmin/assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('bundles/mikyadmin/pages/js/pages.min.js') }}"></script>
+
+
+<script src="{{ asset('bundles/mikyadmin/assets/js/scripts.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('bundles/mikyadmin/assets/js/demo.js') }}" type="text/javascript"></script>
+
+{% block form_js %}
+	{% include '@MikyLocation/_javascripts.html.twig'%}
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-collapse/bootstrap-tabcollapse.js') }}"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.'~app.request.locale~'.min.js') }}" charset="UTF-8" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-typehead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-typehead/typeahead.jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/handlebars/handlebars-v4.0.5.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-autonumeric/autoNumeric.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/mikyadmin/assets/plugins/bootstrap3-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/mikyadmin/assets/plugins/summernote/js/summernote.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-inputmask/jquery.inputmask.min.js') }}"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-validation/js/jquery.validate.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/mikyadmin/assets/plugins/jquery-validation/localization/messages_'~app.request.locale~'.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset("bundles/bosoneditor/tinymce/jquery.tinymce.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("bundles/bosoneditor/tinymce/tinymce.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("bundles/bosoneditor/js/custom_tinymce.js") }}" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            $('form').validate({
+                ignore: false,
+                invalidHandler: function(e,validator) {
+                    // loop through the errors:
+                    for (var i=0;i<validator.errorList.length;i++){
+                        // "uncollapse" section containing invalid input/s:
+                        var tab = $(validator.errorList[i].element).closest('.tab-pane');
+                        if(tab != null){
+                            var id = tab.attr("id");
+                            $('a[href="#' + id + '"]').tab('show');
+                        }
+                        $(validator.errorList[i].element).closest('.panel-collapse.collapse').collapse('show');
+                    }
+                }
+            })
+        })
+    </script>
+    <script src="{{ asset('bundles/mikyadmin/assets/js/form_elements.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{#<script src="{{ asset("bundles/mikyadmin/assets/plugins/dropzone/css/dropzone.css") }}" type="text/javascript"></script>#}
+<script src="{{ asset("bundles/mikymedia/js/dropzone.js") }}" type="text/javascript"></script>
+<script src="{{ asset("bundles/mikymedia/js/form_dropzone.js") }}" type="text/javascript"></script>
+<script src="{{ asset("bundles/bosoneditor/js/custom_tinymce.js") }}" type="text/javascript"></script>

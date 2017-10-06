@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+{% block head %}
+<head>
+    {% block meta %}
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta content="" name="description"/>
+        <meta content="" name="author"/>
+        <meta name="robots" content="noindex">
+    {% endblock %}
+    <title>{% block title %}Pages{% endblock %}</title>
+    <link rel="apple-touch-icon" href="pages/ico/60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    {% block stylesheets %}
+        {% include 'MikyAdminBundle::_stylesheets.html.twig'%}
+
+    {% endblock %}
+</head>
+{% endblock %}
+{% block body %}
+<body {% block body_attributs %}ng-app="AdminApp" class="fixed-header dashboard"{% endblock %}>
+{% block page %}
+{% block sidebar_wrapper %}
+    {% include 'MikyAdminBundle::_sidebar.html.twig'%}
+{% endblock %}
+
+<div class="page-container ">
+
+    {% block header_wrapper %}
+        {% include 'MikyAdminBundle::_header.html.twig'%}
+    {% endblock %}
+
+    <div class="page-content-wrapper ">
+        <div class="content sm-gutter">
+            {% block content_wrapper %}
+
+            <div class="container-fluid padding-25 sm-padding-10">
+				{% block breadcrumb_wrapper %}
+                <ul class="breadcrumb">
+					{% block breadcrumb %}
+                    <li>
+                        <a href="{{ path("miky_admin_admin_dashboard") }}">{{ "miky_core.home"|trans }}</a>
+                    </li>
+					{% endblock %}
+                </ul>
+				{% endblock %}
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            {% endblock %}
+        </div>
+
+
+{% block footer %}
+    {% include 'MikyAdminBundle::_footer.html.twig'%}
+{% endblock %}
+    </div>
+
+</div>
+
+{% block quickview %}
+    {% include 'MikyAdminBundle::_quickview.html.twig'%}
+{% endblock %}
+{% block rightpanel %}
+    {% include 'MikyAdminBundle::_rightpanel.html.twig'%}
+{% endblock %}
+{% block searchpanel %}
+    {% include 'MikyAdminBundle::_searchpanel.html.twig'%}
+{% endblock %}
+
+{% endblock %}
+{% block javascripts %}
+{% include 'MikyAdminBundle::_javascripts.html.twig'%}
+{% endblock %}
+</body>
+{% endblock %}
+</html>

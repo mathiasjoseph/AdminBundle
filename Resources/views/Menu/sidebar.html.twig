@@ -1,0 +1,40 @@
+{% extends 'knp_menu.html.twig' %}
+{% trans_default_domain "messages" %}
+{% block list %}
+
+    {% for item in item.children %}
+        {{ block('item') }}
+    {% endfor %}
+{% endblock %}
+
+{% block item %}
+    {% if item.level is same as(1) %}
+        {% set selected = false %}
+        {% for i in item.children %}{% if i.uri == app.request.requestUri %}
+            {% set selected = true %}
+        {% endif %}{% endfor %}
+        <li class="{% if selected == true %}open active{% endif %}">
+            <a href="javascript:;" >
+                <span class="title">{{ item.label|trans }}</span>
+                <span class="arrow"></span>
+            </a>
+            {{ block('icon') }}
+            <ul class="sub-menu">
+
+                {{ block('list') }}
+            </ul></li>
+    {% else %}
+        <li>
+            <a href="{{ item.uri }}">
+                <span class="title">{{ item.label|trans }}</span>
+            </a>
+            {{ block('icon') }}
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block icon %}
+    {% set icon = item.labelAttribute('icon') %}
+    {% if icon %}<span class="icon-thumbnail"><i class="fa fa-{{ icon }}"></i></span></i></span>{% endif %}
+{% endblock %}
+

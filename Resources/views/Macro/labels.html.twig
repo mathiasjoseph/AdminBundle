@@ -1,0 +1,54 @@
+{% macro default(text) %}
+    <span class="ui label">{{ text }}</span>
+{% endmacro %}
+
+{% macro status(status) %}
+    {% import _self as labels %}
+
+    {% if status %}
+        {{ labels.enabled() }}
+    {% else %}
+        {{ labels.disabled() }}
+    {% endif %}
+{% endmacro %}
+
+
+
+{% macro default(text) %}
+    <span class="ui label">
+        {{ text|trans }}
+    </span>
+{% endmacro %}
+
+{% macro enabled() %}
+    <span class="label label-sm label-success">{{ 'miky_core.yes'|trans }}</span>
+{% endmacro %}
+
+{% macro disabled() %}
+    <span class="label label-sm label-success">{{ 'miky_core.no'|trans }}</span>
+
+{% endmacro %}
+
+{% macro yesNo(value) %}
+    {% import _self as labels %}
+
+    {% if value %}
+        {{ labels.yes() }}
+    {% else %}
+        {{ labels.no() }}
+    {% endif %}
+{% endmacro %}
+
+{% macro yes() %}
+    <span class="ui basic label">
+        <i class="checkmark icon"></i>
+        {{ 'miky_core.yes'|trans }}
+    </span>
+{% endmacro %}
+
+{% macro no() %}
+    <span class="ui basic label">
+        <i class="remove icon"></i>
+        {{ 'miky.ui.no'|trans }}
+    </span>
+{% endmacro %}
