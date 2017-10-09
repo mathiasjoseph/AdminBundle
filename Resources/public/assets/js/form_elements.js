@@ -111,13 +111,12 @@
 
 
         setInterval(function () {
-            $('.timepicker').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
+            $('.timepicker').timepicker({showMeridian: false, minuteStep: 1}).on('show.timepicker', function (e) {
                 var widget = $('.bootstrap-timepicker-widget');
                 widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
                 widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
             });
         }, 500);
-        // $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
         $('#datepicker-embeded').datepicker({daysOfWeekDisabled: "0,1"});
         var countries = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,

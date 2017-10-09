@@ -258,7 +258,9 @@
     {%- endif -%}
 {%- endblock form_errors -%}
 {%- block checkbox_widget -%}
-    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if value == true %} checked="checked"{% endif %} />
+    <input type="checkbox" {{ block('widget_attributes') }}
+    {% if data is defined %} value="{{ data }}"{% endif %}
+    {% if data == true %} checked="checked"{% endif %} />
 {%- endblock checkbox_widget -%}
 {% block checkbox_row -%}
 {% set row_attr = row_attr|merge({'class': row_attr.class|default ~ " form-group"}) %}
